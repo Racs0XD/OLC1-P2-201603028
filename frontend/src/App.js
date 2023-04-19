@@ -4,7 +4,7 @@ import Editor from './components/Editor';
 import Reportes from './components/Reportes';
 import Foot from './components/Foot'
 import { useState } from 'react';
-const axios = require('axios').default
+import axios from 'axios';
 
 function App() {
   const [paneCount, setPaneCount] = useState(2)
@@ -14,18 +14,22 @@ function App() {
   const [consola, setConsola] = useState('')
   const [reportes, setReportes] = useState('')
   const [tab, setTab] = useState(0)
+
   var compilar = ()=>{
     var data = ''
     var reportes = '';
     async function enviar(){
-        let res = await axios.post("http://localhost:3000/compilar", {codigo: currentText});
-        data = String(res.data.data)
+        let res = await axios.post("http://localhost:5000/analizar",  {entrada: currentText});
+        console.log(res.data.arbol)
+        data = String(res.data.resultado)
         reportes = res.data.reportes
         setReportes(reportes)
-        setConsola(String(data))         
+        setConsola(data)         
     }
+    
     enviar()
   }
+  
   const add = ()=>{
     let newPanes = panes
     setPaneCount(parseInt(paneCount)+1)
@@ -72,7 +76,6 @@ function App() {
           <Head
             panes={panes}
             active={active}
-            compilar={compilar}
             setCurrentText={setCurrentText}
             mode={mode}
             tab={tab}
@@ -90,8 +93,10 @@ function App() {
                   active={active}
                   change={change}
                   currentText={currentText}
+                  setCurrentText={setCurrentText}
                   consola={consola}
                   updateText={updateText}
+                  compilar={compilar}
                   />
                 ):tab===1?(
                   <>

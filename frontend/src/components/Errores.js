@@ -6,7 +6,7 @@ function Errores(props) {
         <>
         <Segment>
             <Header size="huge">
-                <Icon name='trash alternate'/>
+                <Icon name='exclamation'/>
                 <Header.Content>Reporte de Errores</Header.Content>
             </Header>
         </Segment>{

@@ -9,9 +9,6 @@ function Head(props) {
                 <Header.Content>TypeWise</Header.Content>
             </Header>
       <Menu inverted borderless className="Nav">
-        <Header className="Title">
-          TypeWise
-        </Header>
         <Menu.Item className='opcion'>
           <Button color='purple' onClick={() => { props.mode(0) }}>Editor</Button>
         </Menu.Item>

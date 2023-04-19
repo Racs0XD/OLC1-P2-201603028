@@ -62,10 +62,10 @@
 }
 /lex
 %{
-       const TIPO_OPERACION= require('./controladores/Enums/TipoOperacion');
-        const TIPO_VALOR = require('./controladores/Enums/TipoValor');
-        const TIPO_DATO= require('./controladores/Enums/TipoDato');
-        const INSTRUCCION = require('./controladores/Instruccion/Instruccion');
+       const TIPO_OPERACION= require('../controladores/Enums/TipoOperacion');
+        const TIPO_VALOR = require('../controladores/Enums/TipoValor');
+        const TIPO_DATO= require('../controladores/Enums/TipoDato');
+        const INSTRUCCION = require('../controladores/Instruccion/Instruccion');
     
 %}
 

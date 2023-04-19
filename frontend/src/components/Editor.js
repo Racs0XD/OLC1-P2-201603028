@@ -3,6 +3,7 @@ import { Button, Form, Grid, Header, Icon, Menu, Segment, TextArea } from 'seman
 
 function Editor(props) {
     return (
+        
         <Segment className="Header">
             <Header size='large'>
                 <Icon name='edit' />
@@ -10,7 +11,7 @@ function Editor(props) {
             </Header>
             <Menu inverted borderless className="Nav">
                 <Menu.Item className='opcion'>
-                    <input type="file" class="inputfile" accept='.tw' onChange={
+                    <input type="file" className="inputfile" accept='.tw' onChange={
                         (e) => {
                             if (e.target.files[0] != null) {
                                 let reader = new FileReader()
@@ -24,7 +25,7 @@ function Editor(props) {
                         }
                     } id="abrirArchivo" />
 
-                    <label for="abrirArchivo" class={"ui violet button "}>
+                    <label htmlFor="abrirArchivo" className={"ui violet button "}>
                         Abrir
                     </label>
                 </Menu.Item>
@@ -40,7 +41,7 @@ function Editor(props) {
                         link.click()
                     }}>Guardar</Button>
                 </Menu.Item>
-                <Menu.Item className='opcion'>
+                <Menu.Item position='right' className='opcion'>
                     <Button color='pink' onClick={props.compilar}>Compilar</Button>
                 </Menu.Item>
             </Menu>

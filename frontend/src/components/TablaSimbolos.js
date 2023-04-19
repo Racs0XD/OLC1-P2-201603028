@@ -1,12 +1,12 @@
 import React from 'react'
 import { Header, Icon, Message, Segment, Table } from 'semantic-ui-react'
 
-function TablaSymbolos(props) {
+function TablaSimbolos(props) {
     return (
         <>
         <Segment>
             <Header size="huge">
-                <Icon name='at'/>
+                <Icon name='table'/>
                 <Header.Content>Tabla de Símbolos</Header.Content>
             </Header>
         </Segment>{
@@ -52,4 +52,4 @@ function TablaSymbolos(props) {
     )
 }
 
-export default TablaSymbolos
+export default TablaSimbolos

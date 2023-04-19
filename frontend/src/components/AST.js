@@ -6,7 +6,7 @@ function AST(props) {
         <>
         <Segment>
             <Header size="huge">
-                <Icon name='pie graph'/>
+                <Icon name='sitemap'/>
                 <Header.Content>Árbol de Análisis Sintáctico</Header.Content>
             </Header>
         </Segment>{
