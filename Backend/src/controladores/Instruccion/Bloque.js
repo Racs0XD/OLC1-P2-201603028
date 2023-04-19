@@ -2,10 +2,19 @@ const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion");
 const Print = require("./Print");
 const Asignacion = require("./Asignacion");
 const Declaracion = require("./Declaracion");
+const SentenciaIf = require("./If");
+
 function Bloque(_instrucciones,_ambito){
     var cadena=""
+    var cBreak = false;
     
     _instrucciones.forEach(instruccion => {
+        if(cBreak){
+            return{
+                cBreak: cBreak,
+                cadena: cadena
+            }
+        }
         if(instruccion.tipo===TIPO_INSTRUCCION.PRINT){
            cadena+=Print(instruccion,_ambito) + "\n"
         }else if (instruccion.tipo === TIPO_INSTRUCCION.DECLARACION) {
@@ -19,9 +28,18 @@ function Bloque(_instrucciones,_ambito){
             if (mensaje != null) {
                 cadena += mensaje
             }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.IF){
+            var ejecutar = SentenciaIf(instruccion, _ambito)
+            var mensaje = ejecutar.cadena
+            cBreak = ejecutar.cBreak
+            hayContinue = ejecutar.hayContinue
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
         }
     });
     return {
+        cBreak: cBreak,
         cadena:cadena
     }
 

@@ -2,7 +2,7 @@
 const express = require('express');
 const bodParser = require('body-parser')
 const cors = require('cors');
-const parser = require('./gramatica/g');
+const parser = require('./gramatica/gramatica');
 const app = express();
 const morgan = require('morgan');
 
