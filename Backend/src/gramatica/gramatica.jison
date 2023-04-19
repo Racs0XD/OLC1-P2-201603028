@@ -14,6 +14,10 @@
 "string"                return 'Rstring'
 "if"                    return 'Rif'
 "else"                  return 'Relse'
+"switch"                return 'Rswitch'
+"case"                  return 'Rcase'
+"break"                 return 'Rbreak'
+"default"               return 'Rdefault'
 "void"                  return 'Rvoid'
 "print"                 return 'Rprint'
 "true"                  return 'Rtrue'
@@ -126,11 +130,10 @@ INSTRUCCION: DEC_VAR ptcoma {$$=$1;}                                           /
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1;}
+        |SWITCH {$$=$1}
+        |BREAK {$$=$1}
 
 ;
-PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}
-;
-
 
 OPCIONESMETODO: OPCIONESMETODO CUERPOMETODO  {$1.push($2); $$=$1;}
               | CUERPOMETODO {$$=[$1];}
@@ -140,7 +143,13 @@ CUERPOMETODO: DEC_VAR ptcoma {$$=$1}
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1}
+        |SWITCH {$$=$1}
+        |BREAK {$$=$1}
 ;
+
+PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}
+;
+
 IF: Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIf($3, $6 , this._$.first_line,this._$.first_column+1)}
         | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC Relse llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIfElse($3, $6, $10 , this._$.first_line,this._$.first_column+1)}
         | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC ELSEIFS {$$ = new INSTRUCCION.nuevoIfElseIf($3, $6,$8,null,this._$.first_line, this._$.first_column+1)}
@@ -153,6 +162,25 @@ ELSEIFS: ELSEIFS CONELSEIF {$1.push($2); $$=$1}
 
 CONELSEIF: Relse Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoElseIf($4, $7,this._$.first_line, this._$.first_column+1)}
 ;
+
+SWITCH: Rswitch parA EXPRESION parC llaveA CSWITCH DEF llaveC {$$= new INSTRUCCION.nuevoSwitch($3, $6, $7, this._$.first_line,this._$.first_column+1)}
+      | Rswitch parA EXPRESION parC llaveA CSWITCH llaveC {$$= new INSTRUCCION.nuevoSwitch($3, $6, null, this._$.first_line,this._$.first_column+1)}
+      | Rswitch parA EXPRESION parC llaveA DEF llaveC {$$= new INSTRUCCION.nuevoSwitch($3, null, $6, this._$.first_line,this._$.first_column+1)}
+; 
+
+CSWITCH: CSWITCH CONSWITCH {$1.push($2); $$=$1;}
+            | CONSWITCH {$$=[$1];}
+;
+
+CONSWITCH: Rcase EXPRESION dospuntos OPCIONESMETODO {$$ = new INSTRUCCION.nuevoCase($2, $4 , this._$.first_line,this._$.first_column+1) }
+;
+
+DEF: Rdefault dospuntos OPCIONESMETODO {$$ = $3}
+;
+
+BREAK: Rbreak ptcoma {$$ = new INSTRUCCION.nuevoBreak(this._$.first_line,this._$.first_column+1)}
+;
+
 
 EXPRESION: EXPRESION suma EXPRESION{$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION menos EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line, this._$.first_column+1);}

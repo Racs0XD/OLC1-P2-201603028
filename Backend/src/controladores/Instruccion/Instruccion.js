@@ -110,6 +110,31 @@ const Instruccion ={
             columna: _columna,
             idSent: _idSentencia
         }
+    }, nuevoSwitch: function(_expresion, _lista_case, _instruccionesDefault, _linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.SWITCH,
+            expresion: _expresion,
+            lista_case: _lista_case,
+            instruccionesDefault: _instruccionesDefault,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoCase: function(_expresion, _instruccionesCase, _linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.CASE,
+			expresion: _expresion,
+			instruccionesCase: _instruccionesCase,
+            linea: _linea,
+            columna: _columna
+		}
+    },
+    nuevoBreak: function(_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.BREAK,
+            linea: _linea,
+            columna: _columna
+        }
     },
 
 }

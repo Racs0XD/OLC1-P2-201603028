@@ -8,6 +8,8 @@ const TIPO_INSTRUCCION={
     IFE: 'IFE',
     ELSEIF: 'ELSEIF',
     IFEIF: 'IFEIF',
-    
+    SWITCH: 'SWITCH',
+    CASE: 'CASE',
+    BREAK: 'BREAK',
 }
 module.exports = TIPO_INSTRUCCION;

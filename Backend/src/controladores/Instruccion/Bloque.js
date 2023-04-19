@@ -5,6 +5,7 @@ const Declaracion = require("./Declaracion");
 const SentenciaIf = require("./If");
 const SentenciaIfElse = require("./IfElse");
 const SentenciaIfElseIf = require("./IfElseIf");
+const Switch = require("./Switch");
 
 function Bloque(_instrucciones,_ambito){
     var cadena=""
@@ -44,10 +45,18 @@ function Bloque(_instrucciones,_ambito){
             if(mensaje!=null){
                 cadena+=mensaje
             }
-        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFCEIF){
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFEIF){
             var ejec = SentenciaIfElseIf(instruccion, _ambito)
             var mensaje = ejec.cadena
-            hayBreak = ejec.hayBreak
+            cBreak = ejec.cBreak
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.SWITCH){
+            var ejec = Switch(instruccion, _ambito)
+            var mensaje = ejec.cadena
+            cBreak = false
+            hayContinue = ejec.hayContinue
             if(mensaje!=null){
                 cadena+=mensaje
             }
