@@ -3,6 +3,7 @@ const Print = require("./Print");
 const Asignacion = require("./Asignacion");
 const Declaracion = require("./Declaracion");
 const SentenciaIf = require("./If");
+const SentenciaIfElse = require("./IfElse");
 
 function Bloque(_instrucciones,_ambito){
     var cadena=""
@@ -32,7 +33,13 @@ function Bloque(_instrucciones,_ambito){
             var ejecutar = SentenciaIf(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
-            hayContinue = ejecutar.hayContinue
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFE){
+            var ejecutar = SentenciaIfElse(instruccion, _ambito)
+            var mensaje = ejecutar.cadena
+            cBreak = ejecutar.cBreak
             if(mensaje!=null){
                 cadena+=mensaje
             }

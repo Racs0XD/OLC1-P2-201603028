@@ -81,6 +81,15 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
+    }, nuevoIfElse: function(_expresion, _instruccionesIf, _instruccionesElse, _linea, _columna){
+        return{
+            tipo: TIPO_INSTRUCCION.IFE,
+            expresion: _expresion,
+            instruccionesIf: _instruccionesIf,
+            instruccionesElse: _instruccionesElse,
+            linea: _linea,
+            columna: _columna
+        }
     }
 
 }

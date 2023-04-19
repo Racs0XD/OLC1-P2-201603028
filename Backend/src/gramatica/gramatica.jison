@@ -126,12 +126,27 @@ INSTRUCCION: DEC_VAR ptcoma {$$=$1;}                                           /
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1;}
+
 ;
 PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}
 ;
 
-IF: Rif parA EXPRESION parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoIf($3, $6, this.$.first_line,this.$.first_column+1)}
+
+OPCIONESMETODO: OPCIONESMETODO CUERPOMETODO  {$1.push($2); $$=$1;}
+              | CUERPOMETODO {$$=[$1];}
 ;
+
+CUERPOMETODO: DEC_VAR ptcoma {$$=$1}
+        |ASIG_VAR ptcoma {$$=$1;}
+        |PRINT {$$=$1;}
+        |IF {$$=$1}
+;
+IF: Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIf($3, $6 , this._$.first_line,this._$.first_column+1)}
+        | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC Relse llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIfElse($3, $6, $10 , this._$.first_line,this._$.first_column+1)}
+  
+;
+
+
 
 EXPRESION: EXPRESION suma EXPRESION{$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION menos EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line, this._$.first_column+1);}

@@ -5,5 +5,6 @@ const TIPO_INSTRUCCION={
     DEC_METODO:'DEC_METODO',
     MAIN: 'MAIN',
     IF: 'IF',   
+    IFE: 'IFE',
 }
 module.exports = TIPO_INSTRUCCION;
