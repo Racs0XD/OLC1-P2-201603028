@@ -90,7 +90,27 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
-    }
+    }, nuevoElseIf: function(_expresion, _instruccionesElseIf, _linea, _columna, _idSentencia){
+        return {
+            tipo: TIPO_INSTRUCCION.ELSEIF,
+			expresion: _expresion,
+			instruccionesElseIf: _instruccionesElseIf,
+            linea: _linea,
+            columna: _columna,
+            idSent: _idSentencia
+		}
+    }, nuevoIfElseIf: function(_expresion, _instruccionesIf, _lista_elseif, _instruccionesElse, _linea, _columna, _idSentencia){
+        return {
+            tipo: TIPO_INSTRUCCION.IFCELSEIF,
+            expresion: _expresion,
+            instruccionesIf: _instruccionesIf,
+            lista_elseif: _lista_elseif,
+            instruccionesElse: _instruccionesElse,
+            linea: _linea,
+            columna: _columna,
+            idSent: _idSentencia
+        }
+    },
 
 }
 module.exports = Instruccion;

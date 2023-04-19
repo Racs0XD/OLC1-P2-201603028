@@ -143,10 +143,16 @@ CUERPOMETODO: DEC_VAR ptcoma {$$=$1}
 ;
 IF: Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIf($3, $6 , this._$.first_line,this._$.first_column+1)}
         | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC Relse llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIfElse($3, $6, $10 , this._$.first_line,this._$.first_column+1)}
-  
+        | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC ELSEIFS {$$ = new INSTRUCCION.nuevoIfElseIf($3, $6,$8,null,this._$.first_line, this._$.first_column+1)}
+        | Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC ELSEIFS Relse llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoIfElseIf($3, $6,$8,$11,this._$.first_line, this._$.first_column+1)}
 ;
 
+ELSEIFS: ELSEIFS CONELSEIF {$1.push($2); $$=$1}
+    |CONELSEIF {$$=[$1];}
+;
 
+CONELSEIF: Relse Rif parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoElseIf($4, $7,this._$.first_line, this._$.first_column+1)}
+;
 
 EXPRESION: EXPRESION suma EXPRESION{$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION menos EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line, this._$.first_column+1);}

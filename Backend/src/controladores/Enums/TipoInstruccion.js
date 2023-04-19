@@ -6,5 +6,8 @@ const TIPO_INSTRUCCION={
     MAIN: 'MAIN',
     IF: 'IF',   
     IFE: 'IFE',
+    ELSEIF: 'ELSEIF',
+    IFEIF: 'IFEIF',
+    
 }
 module.exports = TIPO_INSTRUCCION;

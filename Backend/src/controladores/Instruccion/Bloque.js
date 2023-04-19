@@ -4,6 +4,7 @@ const Asignacion = require("./Asignacion");
 const Declaracion = require("./Declaracion");
 const SentenciaIf = require("./If");
 const SentenciaIfElse = require("./IfElse");
+const SentenciaIfElseIf = require("./IfElseIf");
 
 function Bloque(_instrucciones,_ambito){
     var cadena=""
@@ -40,6 +41,13 @@ function Bloque(_instrucciones,_ambito){
             var ejecutar = SentenciaIfElse(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFCEIF){
+            var ejec = SentenciaIfElseIf(instruccion, _ambito)
+            var mensaje = ejec.cadena
+            hayBreak = ejec.hayBreak
             if(mensaje!=null){
                 cadena+=mensaje
             }
