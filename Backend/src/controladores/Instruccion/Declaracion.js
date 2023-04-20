@@ -24,7 +24,7 @@ function Declaracion(_instruccion, _ambito){
 
         var valor = 0
         if (_instruccion.valor != null) { 
-            var op = Operacion(_instruccion.valor, _ambito)
+            var op = Operacion(_instruccion.valor, _ambito)            
             tipo = op.tipo;
             if (tipo === TIPO_DATO.ENTERO) {
                 valor = op.valor;

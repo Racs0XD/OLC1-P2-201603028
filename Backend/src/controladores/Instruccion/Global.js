@@ -30,6 +30,7 @@ function Global(_instrucciones, _ambito){
                cadena+= mensaje+ "\n"
             }
         }else if(_instrucciones[i].tipo===TIPO_INSTRUCCION.ASIGNACION){
+            
             var mensaje = Asignacion(_instrucciones[i],_ambito)
             if(mensaje!=null){
                cadena+= mensaje+ "\n"
