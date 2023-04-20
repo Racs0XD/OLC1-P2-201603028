@@ -5,7 +5,7 @@ const Operacion = require("../Operaciones/Operacion");
 function SentenciaIf(_instruccion, _ambito){
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito);
-    var cBreak=false
+    var cBreak=false    
     if(operacion.tipo === TIPO_DATO.BOOL){
         if(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)

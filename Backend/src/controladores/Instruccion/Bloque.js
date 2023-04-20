@@ -18,6 +18,7 @@ function Bloque(_instrucciones,_ambito){
                 cadena: cadena
             }
         }
+        console.log(instruccion.tipo)
         if(instruccion.tipo===TIPO_INSTRUCCION.PRINT){
            cadena+=Print(instruccion,_ambito) + "\n"
         }else if (instruccion.tipo === TIPO_INSTRUCCION.DECLARACION) {
@@ -45,7 +46,7 @@ function Bloque(_instrucciones,_ambito){
             if(mensaje!=null){
                 cadena+=mensaje
             }
-        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFEIF){
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.IFEIF){           
             var ejec = SentenciaIfElseIf(instruccion, _ambito)
             var mensaje = ejec.cadena
             cBreak = ejec.cBreak

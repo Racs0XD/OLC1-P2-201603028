@@ -101,7 +101,7 @@ const Instruccion ={
 		}
     }, nuevoIfElseIf: function(_expresion, _instruccionesIf, _lista_elseif, _instruccionesElse, _linea, _columna, _idSentencia){
         return {
-            tipo: TIPO_INSTRUCCION.IFCELSEIF,
+            tipo: TIPO_INSTRUCCION.IFEIF,
             expresion: _expresion,
             instruccionesIf: _instruccionesIf,
             lista_elseif: _lista_elseif,
@@ -119,8 +119,7 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
-    },
-    nuevoCase: function(_expresion, _instruccionesCase, _linea, _columna){
+    }, nuevoCase: function(_expresion, _instruccionesCase, _linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.CASE,
 			expresion: _expresion,
@@ -128,8 +127,7 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
 		}
-    },
-    nuevoBreak: function(_linea, _columna){
+    }, nuevoBreak: function(_linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.BREAK,
             linea: _linea,
