@@ -1,4 +1,16 @@
 /* lexical grammar */
+%{
+        const TIPO_OPERACION= require('../controladores/Enums/TipoOperacion');
+        const TIPO_VALOR = require('../controladores/Enums/TipoValor');
+        const TIPO_DATO= require('../controladores/Enums/TipoDato');
+        const INSTRUCCION = require('../controladores/Instruccion/Instruccion');     
+
+        let respuesta = {
+                LIns: [],
+                err: ""
+        };
+              
+%}
 %lex
 %options case-insensitive
 %%
@@ -60,18 +72,9 @@
 ["\'"]([^"\'"])*["\'"]                  return 'char'
 
 <<EOF>>               return 'EOF'
-.                     {
-        
-        console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
-}
+.                     { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
-%{
-       const TIPO_OPERACION= require('../controladores/Enums/TipoOperacion');
-        const TIPO_VALOR = require('../controladores/Enums/TipoValor');
-        const TIPO_DATO= require('../controladores/Enums/TipoDato');
-        const INSTRUCCION = require('../controladores/Instruccion/Instruccion');
-    
-%}
+
 
 /* operator associations and precedence */
 %left 'or'
@@ -88,16 +91,18 @@
 %start INICIO
 %% /* language grammar */
 
-INICIO: OPCIONESCUERPO EOF{return $1;}
+INICIO:  OPCIONESCUERPO EOF {respuesta.err = ""; respuesta.LIns = $1; return respuesta;}
+    | error ptcoma         { respuesta.err  =  "Error Sintactico: " + "Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }|
 ;
+
+
 OPCIONESCUERPO: OPCIONESCUERPO CUERPO{$1.push($2); $$=$1;}
             |CUERPO {$$=[$1];}
 ;
 CUERPO: DEC_VAR ptcoma {$$=$1;}                                           //DECLARACION DE CADA COMPONENTE DEL CUERPO DE MANERA RECURSIVA
         |ASIG_VAR ptcoma {$$=$1;}
         |METODOS {$$=$1;}
-        |MAIN {$$=$1;} 
-
+        |MAIN {$$=$1;}
 ;
 METODOS: Rvoid identificador parA parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoMetodo($2, null, $6, this._$.first_line,this._$.first_column+1)}
         
@@ -111,6 +116,7 @@ DEC_VAR: TIPO identificador  {$$= INSTRUCCION.nuevaDeclaracion($2,null, $1,this.
         |TIPO identificador igual EXPRESION  {$$= INSTRUCCION.nuevaDeclaracion($2, $4, $1,this._$.first_line, this._$.first_column+1);
 
         }
+        
 
 ;
 ASIG_VAR: identificador igual EXPRESION {$$ = INSTRUCCION.nuevaAsignacion($1, $3,this._$.first_line, this._$.first_column+1)}
@@ -124,8 +130,8 @@ TIPO: Rint{$$= TIPO_DATO.ENTERO}
 ;
 INSTRUCCIONES: INSTRUCCIONES INSTRUCCION {$$ = $1; $1.push($2);}
             |INSTRUCCION {$$ = [$1];}
-
 ;
+
 INSTRUCCION: DEC_VAR ptcoma {$$=$1;}                                           //DECLARACION DE CADA COMPONENTE DEL CUERPO DE MANERA RECURSIVA
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}

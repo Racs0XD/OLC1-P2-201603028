@@ -6,7 +6,6 @@ function SentenciaIfElseIf(_instruccion, _ambito) {
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito);
     var cBreak = false
-    console.log("IFELSEIF")
     if (operacion.tipo === TIPO_DATO.BOOL) {
         if (operacion.valor) {
             var nuevoAmbito = new Ambito(_ambito)

@@ -18,7 +18,6 @@ function Bloque(_instrucciones,_ambito){
                 cadena: cadena
             }
         }
-        console.log(instruccion.tipo)
         if(instruccion.tipo===TIPO_INSTRUCCION.PRINT){
            cadena+=Print(instruccion,_ambito) + "\n"
         }else if (instruccion.tipo === TIPO_INSTRUCCION.DECLARACION) {

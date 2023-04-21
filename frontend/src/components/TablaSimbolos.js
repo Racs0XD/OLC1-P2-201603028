@@ -10,7 +10,7 @@ function TablaSimbolos(props) {
                 <Header.Content>Tabla de Símbolos</Header.Content>
             </Header>
         </Segment>{
-            props.symbols.length>0?(
+            props.simbolos.length>0?(
                 <>
                 <Table celled>
                     <Table.Header>
@@ -25,14 +25,14 @@ function TablaSimbolos(props) {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {props.symbols.map((c,index)=>
+                        {props.simbolos.map((c,index)=>
                             <Table.Row>
                                 <Table.Cell>{index+1}</Table.Cell>
-                                <Table.Cell>{c.id}</Table.Cell>
-                                <Table.Cell>{c.type}</Table.Cell>
-                                <Table.Cell>{c.typeExp}</Table.Cell>
+                                <Table.Cell>{c.identificador}</Table.Cell>
+                                <Table.Cell>{c.tipoSimbolo}</Table.Cell>
+                                <Table.Cell>{c.tipoVar}</Table.Cell>
                                 <Table.Cell>{c.entorno}</Table.Cell>
-                                <Table.Cell>{c.fila}</Table.Cell>
+                                <Table.Cell>{c.linea}</Table.Cell>
                                 <Table.Cell>{c.columna}</Table.Cell>
                             </Table.Row>
                             )

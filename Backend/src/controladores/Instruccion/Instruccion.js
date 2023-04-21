@@ -133,7 +133,7 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
-    },
+    }, 
 
 }
 module.exports = Instruccion;

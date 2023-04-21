@@ -9,37 +9,9 @@ const axios = require('axios').default
 
 
 function Reportes(props) {
-  const [errores, setErrores] = useState([]);
-  const [symbols, setSymbols] = useState([]);
-  const [ast, setAst] = useState(null);
+  console.log(props.errores);
+  const error = props.errores;
   const [tab, setTab] = useState(2); // Inicialmente mostrar la vista de Errores
-
-  const compi = () => {    
-    setAst(null);
-    // eslint-disable-next-line
-    let data = '';
-    let errores = [];
-    let simbolos = [];
-    let imagen = null;
-
-    async function enviar() {
-      const res = await axios.post("http://localhost:5000/");
-      data = String(res.data.data);
-      errores = res.data.errores;
-      simbolos = res.data.symbols;
-      imagen = res.data.ast;
-      setErrores(errores);
-      setSymbols(simbolos);
-      if (res.data.ast !== null) {
-        setAst("data:image/png;base64," + imagen);
-      } else {
-        setAst(null);
-      }
-    }
-
-
-    enviar();
-  }
 
   const handleTabClick = (tabIndex) => {
     setTab(tabIndex);
@@ -47,7 +19,7 @@ function Reportes(props) {
 
   return (
     <Segment className="Header">
-      <Header onClick={compi} size='large'>
+      <Header  size='large'>
 
         <Icon name='tasks' />
         <Header.Content>Reportes</Header.Content>
@@ -63,9 +35,9 @@ function Reportes(props) {
           <Button color='pink' onClick={() => handleTabClick(4)} active={tab === 3}>Símbolos</Button>
         </Menu.Item>
       </Menu>
-      {tab === 2 && <Errores errores={errores} />}
-      {tab === 3 && <AST ast={ast} />}
-      {tab === 4 && <TablaSimbolos symbols={symbols} />}
+      {tab === 2 && <Errores errores = {error} />}      
+      {tab === 3 && <AST ast/>}
+      {tab === 4 && <TablaSimbolos symbols />}
 
     </Segment>
   );

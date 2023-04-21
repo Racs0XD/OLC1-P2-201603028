@@ -14,6 +14,7 @@ function Head(props) {
         </Menu.Item>
         <Menu.Item className='opcion'>
           <Button color='pink' onClick={() => { props.mode(1) }}>Reportes</Button>
+          
         </Menu.Item>
       </Menu>
     </Segment>
