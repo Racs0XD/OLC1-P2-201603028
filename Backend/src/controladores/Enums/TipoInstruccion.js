@@ -11,6 +11,7 @@ const TIPO_INSTRUCCION={
     SWITCH: 'SWITCH',
     CASE: 'CASE',    
     WHILE: 'WHILE',
+    DOWHILE: 'DOWHILE',
     BREAK: 'BREAK',
     CONTINUE: 'CONTINUE',
     RETURN: 'RETURN',

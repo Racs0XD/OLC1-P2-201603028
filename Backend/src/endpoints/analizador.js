@@ -7,7 +7,7 @@ module.exports = (parser, app) => {
 
     app.post('/analizar', (req, res) => {        
         var prueba = req.body.entrada.toLowerCase()    
-        console.log(prueba)   
+        //console.log(prueba)   
         var ast = parser.parse(prueba)        
         const AmbitoGlobal= new Ambito(null,"Global") 
         var resultado

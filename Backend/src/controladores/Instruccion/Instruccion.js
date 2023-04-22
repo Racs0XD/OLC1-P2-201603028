@@ -136,6 +136,15 @@ const Instruccion ={
             columna: _columna ,
             idSent: _idSentencia
         }
+    }, nuevoDoWhile: function(_expresion, _instrucciones, _linea, _columna, _idSentencia){
+        return {
+            tipo: TIPO_INSTRUCCION.DOWHILE,
+            expresion: _expresion,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna,
+            idSent: _idSentencia
+        }
     }, nuevoBreak: function(_linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.BREAK,
@@ -154,7 +163,7 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
-    },
+    }, 
 
 
 }

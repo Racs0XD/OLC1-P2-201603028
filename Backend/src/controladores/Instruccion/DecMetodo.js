@@ -2,8 +2,6 @@ const Metodo = require("../Ambito/Metodo")
 
 
 function DecMetodo(_instruccion,_ambito){
-    console.log(_instruccion)
-    console.log("+++++"+_instruccion.tipo)
     const nuevoMetodo= new Metodo(_instruccion.nombre, _instruccion.tipo,_instruccion.lista_parametros,_instruccion.instrucciones,_instruccion.linea,_instruccion.columna)
     if(_ambito.existeSimbolo(nuevoMetodo.id)!=false){ 
         return `Error: No se puede declarar un metodo con el mismo nombres de una variable '${nuevoMetodo.id}'... Linea: ${nuevoMetodo.linea} Columna: ${nuevoMetodo.columna}`

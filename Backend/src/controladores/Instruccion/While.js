@@ -4,6 +4,7 @@ const Ambito = require("../Ambito/Ambito")
 function While(_instruccion, _ambito){
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito)
+    //console.log(_instruccion.expresion)
     if(operacion.tipo === TIPO_DATO.BOOL){
         while(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)

@@ -7,6 +7,7 @@ const SentenciaIfElse = require("./IfElse");
 const SentenciaIfElseIf = require("./IfElseIf");
 const Switch = require("./Switch");
 const While = require("./While");
+const DoWhile = require("./DoWhile");
 
 function Bloque(_instrucciones,_ambito){
     var cadena=""
@@ -81,7 +82,14 @@ function Bloque(_instrucciones,_ambito){
             if(mensaje!=null){
                 cadena+=mensaje
             }
-        } else if(instruccion.tipo === TIPO_INSTRUCCION.BREAK){
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.DOWHILE){
+            var mensaje = DoWhile(instruccion, _ambito)
+            cBreak = false
+            cContinue = false
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }else if(instruccion.tipo === TIPO_INSTRUCCION.BREAK){
             cBreak = true
             return {
                 cBreak: cBreak,

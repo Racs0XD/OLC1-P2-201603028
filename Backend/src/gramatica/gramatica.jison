@@ -28,10 +28,11 @@
 "else"                  return 'Relse'
 "switch"                return 'Rswitch'
 "case"                  return 'Rcase'
+"do"                    return 'Rdo'
+"while"                 return 'Rwhile'
 "break"                 return 'Rbreak'
 "continue"              return 'Rcontinue'
 "return"                return 'Rreturn'
-"while"                 return 'Rwhile'
 "default"               return 'Rdefault'
 "void"                  return 'Rvoid'
 "print"                 return 'Rprint'
@@ -141,6 +142,7 @@ INSTRUCCION: DEC_VAR ptcoma {$$=$1;}                                           /
         |IF {$$=$1;}
         |SWITCH {$$=$1}        
         |WHILE {$$=$1}
+        | DOWHILE {$$=$1}
         |BREAK {$$=$1}
         |CONTINUE {$$=$1}
         |RETURN {$$=$1}
@@ -156,6 +158,7 @@ CUERPOMETODO: DEC_VAR ptcoma {$$=$1}
         |IF {$$=$1}
         |SWITCH {$$=$1}        
         |WHILE {$$=$1}
+        |DOWHILE {$$=$1}
         |BREAK {$$=$1}
         |CONTINUE {$$=$1}
         |RETURN {$$=$1}
@@ -193,6 +196,10 @@ DEF: Rdefault dospuntos OPCIONESMETODO {$$ = $3}
 ;
 
 WHILE: Rwhile parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoWhile($3, $6 , this._$.first_line,this._$.first_column+1)}
+;
+
+DOWHILE: Rdo llaveA OPCIONESMETODO llaveC Rwhile parA EXPRESION parC ptcoma {$$ = new INSTRUCCION.nuevoDoWhile($7, $3 , this._$.first_line,this._$.first_column+1)}
+|Rdo llaveA llaveC Rwhile parA EXPRESION parC ptcoma {$$ = new INSTRUCCION.nuevoDoWhile($6, [] , this._$.first_line,(this._$.first_column+1));}
 ;
 
 BREAK: Rbreak ptcoma {$$ = new INSTRUCCION.nuevoBreak(this._$.first_line,this._$.first_column+1)}
