@@ -9,7 +9,10 @@ const TIPO_INSTRUCCION={
     ELSEIF: 'ELSEIF',
     IFEIF: 'IFEIF',
     SWITCH: 'SWITCH',
-    CASE: 'CASE',
+    CASE: 'CASE',    
+    WHILE: 'WHILE',
     BREAK: 'BREAK',
+    CONTINUE: 'CONTINUE',
+    RETURN: 'RETURN',
 }
 module.exports = TIPO_INSTRUCCION;

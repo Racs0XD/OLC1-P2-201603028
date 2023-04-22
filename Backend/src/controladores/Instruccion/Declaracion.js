@@ -12,7 +12,7 @@ function Declaracion(_instruccion, _ambito){
                 valor = op.valor;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "Variable", valor, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
 
         if (_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id) != false) {
             return "Error: La variable " + nuevoSimbolo.id + " ya existe linea: " + nuevoSimbolo.linea + " columna: " + nuevoSimbolo.columna;
@@ -30,7 +30,7 @@ function Declaracion(_instruccion, _ambito){
                 valor = op.valor;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "Variable", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)
        
         if (_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id) != false) {
 
@@ -49,7 +49,7 @@ function Declaracion(_instruccion, _ambito){
                 valor = op.valor;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "Variable", valor, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
 
         if (_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id) != false) {
 
@@ -70,7 +70,7 @@ function Declaracion(_instruccion, _ambito){
             }
             
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "Variable", valor, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
 
         if (_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id) != false) {
             return "Error: La variable " + nuevoSimbolo.id + " ya existe linea: " + nuevoSimbolo.linea + " columna: " + nuevoSimbolo.columna;
@@ -89,7 +89,7 @@ function Declaracion(_instruccion, _ambito){
             }
             
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "Variable", valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
 
         if (_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id) != false) {
             return "Error: La variable " + nuevoSimbolo.id + " ya existe linea: " + nuevoSimbolo.linea + " columna: " + nuevoSimbolo.columna;

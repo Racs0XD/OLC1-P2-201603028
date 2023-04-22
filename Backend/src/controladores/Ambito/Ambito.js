@@ -87,7 +87,7 @@ class Ambito {
         let nTabla = new TablaSimbolos(
             _metodo.id,
             _metodo.tipoSimbolo,
-            _metodo.tipo,
+            "VOID",
             getEntornoString(this),
             _metodo.linea,
             _metodo.columna

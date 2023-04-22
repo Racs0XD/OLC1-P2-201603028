@@ -29,6 +29,9 @@
 "switch"                return 'Rswitch'
 "case"                  return 'Rcase'
 "break"                 return 'Rbreak'
+"continue"              return 'Rcontinue'
+"return"                return 'Rreturn'
+"while"                 return 'Rwhile'
 "default"               return 'Rdefault'
 "void"                  return 'Rvoid'
 "print"                 return 'Rprint'
@@ -136,9 +139,11 @@ INSTRUCCION: DEC_VAR ptcoma {$$=$1;}                                           /
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1;}
-        |SWITCH {$$=$1}
+        |SWITCH {$$=$1}        
+        |WHILE {$$=$1}
         |BREAK {$$=$1}
-
+        |CONTINUE {$$=$1}
+        |RETURN {$$=$1}
 ;
 
 OPCIONESMETODO: OPCIONESMETODO CUERPOMETODO  {$1.push($2); $$=$1;}
@@ -149,8 +154,11 @@ CUERPOMETODO: DEC_VAR ptcoma {$$=$1}
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1}
-        |SWITCH {$$=$1}
+        |SWITCH {$$=$1}        
+        |WHILE {$$=$1}
         |BREAK {$$=$1}
+        |CONTINUE {$$=$1}
+        |RETURN {$$=$1}
 ;
 
 PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}
@@ -184,9 +192,17 @@ CONSWITCH: Rcase EXPRESION dospuntos OPCIONESMETODO {$$ = new INSTRUCCION.nuevoC
 DEF: Rdefault dospuntos OPCIONESMETODO {$$ = $3}
 ;
 
+WHILE: Rwhile parA EXPRESION parC llaveA OPCIONESMETODO llaveC {$$ = new INSTRUCCION.nuevoWhile($3, $6 , this._$.first_line,this._$.first_column+1)}
+;
+
 BREAK: Rbreak ptcoma {$$ = new INSTRUCCION.nuevoBreak(this._$.first_line,this._$.first_column+1)}
 ;
 
+CONTINUE: Rcontinue ptcoma {$$ = new INSTRUCCION.nuevoContinue(this._$.first_line,this._$.first_column+1)}
+;
+
+RETURN: Rreturn ptcoma {$$ = new INSTRUCCION.nuevoReturn(this._$.first_line,this._$.first_column+1)}
+;
 
 EXPRESION: EXPRESION suma EXPRESION{$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION menos EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line, this._$.first_column+1);}

@@ -127,13 +127,35 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
 		}
+    }, nuevoWhile: function(_expresion, _instrucciones, _linea, _columna, _idSentencia){
+        return {
+            tipo: TIPO_INSTRUCCION.WHILE,
+            expresion: _expresion,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna ,
+            idSent: _idSentencia
+        }
     }, nuevoBreak: function(_linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.BREAK,
             linea: _linea,
             columna: _columna
         }
-    }, 
+    }, nuevoContinue: function(_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.CONTINUE,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoReturn: function(_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.RETURN,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+
 
 }
 module.exports = Instruccion;

@@ -6,7 +6,8 @@ const Global = require("../controladores/Instruccion/Global")
 module.exports = (parser, app) => {
 
     app.post('/analizar', (req, res) => {        
-        var prueba = req.body.entrada.toLowerCase()       
+        var prueba = req.body.entrada.toLowerCase()    
+        console.log(prueba)   
         var ast = parser.parse(prueba)        
         const AmbitoGlobal= new Ambito(null,"Global") 
         var resultado
@@ -30,18 +31,19 @@ module.exports = (parser, app) => {
                     simbolos.push(simbolo)
                 }
             }
-            console.log(simbolos)
             var resultado = {
                 arbol: ast,
                 resultado: cadena,
                 tabSimbolos: simbolos,
                 errores:""
             }
-            //console.log(simbolos)
-
+            
         }        
         
         res.send(resultado)
+        TASimbolos.TabSimbolos.splice(0, TASimbolos.TabSimbolos.length);
+        
+
         
     })
 

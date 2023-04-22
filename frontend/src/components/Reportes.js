@@ -3,14 +3,13 @@ import Errores from './Errores';
 import TablaSimbolos from './TablaSimbolos';
 import AST from './AST';
 import { Header, Icon, Menu, Segment, Button } from "semantic-ui-react";
-const axios = require('axios').default
 
 
 
 
 function Reportes(props) {
-  console.log(props.errores);
   const error = props.errores;
+  const simbolos = props.simbolos;
   const [tab, setTab] = useState(2); // Inicialmente mostrar la vista de Errores
 
   const handleTabClick = (tabIndex) => {
@@ -37,7 +36,7 @@ function Reportes(props) {
       </Menu>
       {tab === 2 && <Errores errores = {error} />}      
       {tab === 3 && <AST ast/>}
-      {tab === 4 && <TablaSimbolos symbols />}
+      {tab === 4 && <TablaSimbolos simbolos = {simbolos} />}
 
     </Segment>
   );
