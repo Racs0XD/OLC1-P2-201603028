@@ -145,7 +145,18 @@ const Instruccion ={
             columna: _columna,
             idSent: _idSentencia
         }
-    }, nuevoBreak: function(_linea, _columna){
+    }, nuevoFor: function(_expresion, _condicion, _actualizacion, _instrucciones, _linea, _columna, _idSentencia){       
+        return {
+            tipo: TIPO_INSTRUCCION.FOR,
+            expresion: _expresion,
+            condicion: _condicion,
+            actualizacion: _actualizacion,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna,
+            idSent: _idSentencia
+        }
+    },nuevoBreak: function(_linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.BREAK,
             linea: _linea,
@@ -163,7 +174,21 @@ const Instruccion ={
             linea: _linea,
             columna: _columna
         }
-    }, 
+    }, nuevoIncremento: function(_id, _linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.INCREMENTO,
+            id: _id,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoDecremento: function(_id, _linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.DECREMENTO,
+            id: _id,
+            linea: _linea,
+            columna: _columna
+        }
+    },
 
 
 }

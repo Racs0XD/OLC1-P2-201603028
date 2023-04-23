@@ -8,6 +8,9 @@ const SentenciaIfElseIf = require("./IfElseIf");
 const Switch = require("./Switch");
 const While = require("./While");
 const DoWhile = require("./DoWhile");
+const For = require("./For");
+const Incremento = require("./Incremento");
+const Decremento = require("./Decremento");
 
 function Bloque(_instrucciones,_ambito){
     var cadena=""
@@ -89,7 +92,24 @@ function Bloque(_instrucciones,_ambito){
             if(mensaje!=null){
                 cadena+=mensaje
             }
-        }else if(instruccion.tipo === TIPO_INSTRUCCION.BREAK){
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.FOR){
+            var mensaje = For(instruccion, _ambito)
+            cBreak = false
+            cContinue = false
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.INCREMENTO){
+            var mensaje = Incremento(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.DECREMENTO){
+            var mensaje = Decremento(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.BREAK){
             cBreak = true
             return {
                 cBreak: cBreak,

@@ -7,8 +7,7 @@ module.exports = (parser, app) => {
 
     app.post('/analizar', (req, res) => {        
         var prueba = req.body.entrada.toLowerCase()    
-        //console.log(prueba)   
-        var ast = parser.parse(prueba)        
+        var ast = parser.parse(prueba)      
         const AmbitoGlobal= new Ambito(null,"Global") 
         var resultado
         if (ast.err === "") {
@@ -17,7 +16,6 @@ module.exports = (parser, app) => {
             var cont = 0
             for (let i = 0; i < TASimbolos.TabSimbolos.length; i++) {
                 const simbolo = TASimbolos.TabSimbolos[i];
-                //console.log(simbolo.identificador, simbolo.tipoVar);
                  for (let temp of simbolos) {                    
                     if (simbolo.identificador === temp.identificador &&
                         simbolo.entorno === temp.entorno) {
@@ -38,8 +36,14 @@ module.exports = (parser, app) => {
                 errores:""
             }
             
-        }        
-        
+        } else {
+            var resultado = {
+                arbol: ast,
+                resultado: ast.err,
+                tabSimbolos: [],
+                errores:ast.err
+            }
+        }    
         res.send(resultado)
         TASimbolos.TabSimbolos.splice(0, TASimbolos.TabSimbolos.length);
         
