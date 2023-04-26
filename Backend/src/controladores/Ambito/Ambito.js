@@ -32,7 +32,7 @@ class Ambito {
 
     
     
-    addSimbolo(_clave, _simbolo) { //agregar simbolo
+    addSimbolo(_clave, _simbolo) {
         this.tablaSimbolos.set(_clave.toLowerCase(), _simbolo);
         let nTabla = new TablaSimbolos(
             _simbolo.id,
@@ -45,7 +45,7 @@ class Ambito {
         RTSimbolos.TabSimbolos.push(nTabla)
 
     }
-    getSimbolo(_clave) {  //retornar simbolo
+    getSimbolo(_clave) {  
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaSimbolos.get(_clave.toLowerCase())
             if (encontrado != null) {
@@ -54,7 +54,7 @@ class Ambito {
         }
         return null
     }
-    existeSimbolo(_clave) {  //retornar simbolo
+    existeSimbolo(_clave) {  
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaSimbolos.get(_clave.toLowerCase())
             if (encontrado != null) {
@@ -63,8 +63,7 @@ class Ambito {
         }
         return false
     }
-    existeSimboloAmbitoActual(_clave) {  //retornar simbolo
-
+    existeSimboloAmbitoActual(_clave) { 
         var encontrado = this.tablaSimbolos.get(_clave.toLowerCase())
         if (encontrado != null) {
             return true
@@ -82,7 +81,7 @@ class Ambito {
         }
         return false;
     }
-    addMetodo(_s, _metodo) { //agregar metodo
+    addMetodo(_s, _metodo) { 
         this.tablaMetodos.set(_s.toLowerCase(), _metodo)
         let nTabla = new TablaSimbolos(
             _metodo.id,
@@ -94,18 +93,51 @@ class Ambito {
         )
         RTSimbolos.TabSimbolos.push(nTabla)
     }
-    getMetodo(_s) { //(hola, clase simbolo)
+    getMetodo(_s) { 
         for (let e = this; e != null; e = e.anterior) {
-            var encontrado = e.tablaMetodos.get(_s.toLowerCase()) //hola<=>HoLA
+            var encontrado = e.tablaMetodos.get(_s.toLowerCase())
             if (encontrado != null) {
                 return encontrado
             }
         }
         return null
     }
-    existeMetodo(_s) { //verificar si existe metodo
+    existeMetodo(_s) { 
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaMetodos.get(_s.toLowerCase())
+            if (encontrado != null) {
+                return true
+            }
+        }
+        return false
+    }
+
+    addFuncion(_s, _funcion) {
+        this.tablaFunciones.set(_s.toLowerCase(), _funcion)
+        let nTabla = new TablaSimbolos(
+            _funcion.id,
+            _funcion.tipoSimbolo,
+            "FUNCION",
+            getEntornoString(this),
+            _funcion.linea,
+            _funcion.columna
+        )
+        RTSimbolos.TabSimbolos.push(nTabla)
+    }
+
+    getFuncion(_s) { 
+        for (let e = this; e != null; e = e.anterior) {
+            var encontrado = e.tablaFunciones.get(_s.toLowerCase())
+            if (encontrado != null) {
+                return encontrado
+            }
+        }
+        return null
+    }
+    
+    existeFuncion(_s) {
+        for (let e = this; e != null; e = e.anterior) {
+            var encontrado = e.tablaFunciones.get(_s.toLowerCase()) 
             if (encontrado != null) {
                 return true
             }

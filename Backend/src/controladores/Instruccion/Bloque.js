@@ -49,6 +49,18 @@ function Bloque(_instrucciones,_ambito){
             if (mensaje != null) {
                 cadena += mensaje
             }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
+            const Ejecutar = require("./Ejecutar");
+            var mensaje = Ejecutar(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
+            const Ejecutar = require("./Ejecutar");
+            var mensaje = Ejecutar(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.IF){
             var ejecutar = SentenciaIf(instruccion, _ambito)
             var mensaje = ejecutar.cadena

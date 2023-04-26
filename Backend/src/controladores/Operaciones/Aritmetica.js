@@ -3,42 +3,42 @@ const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion")
 const TIPO_OPERACION = require("../Enums/TipoOperacion")
 const TIPO_VALOR = require("../Enums/TipoValor")
 const TipoResultado = require("./TipoResultado")
-const ValorExpresion = require("./ValorExpresion")   
+const ValorExpresion = require("./ValorExpresion")
 
-function Aritmetica(_expresion,_ambito){
+
+function Aritmetica(_expresion, _ambito) {
     if (_expresion.tipo === TIPO_VALOR.DECIMAL || _expresion.tipo === TIPO_VALOR.BOOL || _expresion.tipo === TIPO_VALOR.ENTERO ||
         _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || _expresion.tipo === TIPO_VALOR.CHAR || _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
-        return ValorExpresion(_expresion, _ambito) 
-    }else if (_expresion.tipo === TIPO_OPERACION.SUMA) {
-         //console.log("suma")        
-        return suma(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if (_expresion.tipo === TIPO_OPERACION.RESTA) {
-        // console.log("resta")
-        return resta(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if (_expresion.tipo === TIPO_OPERACION.MULTIPLICACION) {
-        // console.log("multiplicacion")
-        return multiplicacion(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if(_expresion.tipo === TIPO_OPERACION.DIVISION){
-        // console.log("division")
-        return division(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if(_expresion.tipo === TIPO_OPERACION.POTENCIA){
-        // console.log("potencia")
-        return potencia(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if(_expresion.tipo === TIPO_OPERACION.MODULO){
-        // console.log("modulo")
-        return modular(_expresion.opIzq, _expresion.opDer, _ambito)
-    }else if(_expresion.tipo === TIPO_OPERACION.UNARIA){
-        // console.log("menos unario")
-        //console.log(_expresion.opDer)
-        return menosUnario(_expresion.opDer, _ambito)
+      return ValorExpresion(_expresion, _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.SUMA) {
+      return suma(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.RESTA) {
+      return resta(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.MULTIPLICACION) {
+      return multiplicacion(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.DIVISION) {
+      return division(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.POTENCIA) {
+      return potencia(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.MODULO) {
+      return modular(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.UNARIA) {
+      return menosUnario(Aritmetica(_expresion.opDer, _ambito), _ambito);
     }
-}
+  }
+  
+
 
 function suma(_opizq, _opDer, _ambito) {
-    const opIzq = Aritmetica(_opizq, _ambito)  
-    const opDer = Aritmetica(_opDer, _ambito)
-  
-    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)  
+    var opIzq = Aritmetica(_opizq, _ambito)
+    var opDer = Aritmetica(_opDer, _ambito)   
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
+    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
 
 
     if (tipores != null) {
@@ -135,21 +135,30 @@ function suma(_opizq, _opDer, _ambito) {
 
         }
 
-    } 
+    }
 
 }
 
 function resta(_opizq, _opDer, _ambito) {
-    const opIzq = Aritmetica(_opizq, _ambito)  
-    const opDer = Aritmetica(_opDer, _ambito)
+    var opIzq = Aritmetica(_opizq, _ambito)
+    var opDer = Aritmetica(_opDer, _ambito)   
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
+
+
+
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
-    
+
     if (opIzq.tipo === TIPO_DATO.CADENA || opDer.tipo === TIPO_DATO.CADENA) {
         return {
-           valor: "No se puede realizar la resta con cadenas",
-           tipo: tipores,
-           linea: _opizq.linea,
-           columna: _opizq.columna
+            valor: "No se puede realizar la resta con cadenas",
+            tipo: tipores,
+            linea: _opizq.linea,
+            columna: _opizq.columna
         }
     } else if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
@@ -233,19 +242,25 @@ function resta(_opizq, _opDer, _ambito) {
 
 
         }
-   }
+    }
 }
 
 function multiplicacion(_opizq, _opDer, _ambito) {
-    const opIzq = Aritmetica(_opizq, _ambito)
-    const opDer = Aritmetica(_opDer, _ambito)
+    var opIzq = Aritmetica(_opizq, _ambito)
+    var opDer = Aritmetica(_opDer, _ambito)   
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (opIzq.tipo === TIPO_DATO.CADENA || opDer.tipo === TIPO_DATO.CADENA) {
         return {
-              valor: "No se puede realizar la multiplicacion con cadenas",
-                tipo: tipores,
-                linea: _opizq.linea,
-                columna: _opizq.columna
+            valor: "No se puede realizar la multiplicacion con cadenas",
+            tipo: tipores,
+            linea: _opizq.linea,
+            columna: _opizq.columna
         }
     } else if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
@@ -254,7 +269,7 @@ function multiplicacion(_opizq, _opDer, _ambito) {
                     if (opIzq.valor === true) {
                         const resultado = "Error no se puede hacer multiplicacion con booleanos";
                         return {
-                            valor: resultado,   
+                            valor: resultado,
                             tipo: tipores,
                             linea: _opizq.linea,
                             columna: _opizq.columna
@@ -321,8 +336,17 @@ function multiplicacion(_opizq, _opDer, _ambito) {
 }
 
 function division(_opizq, _opDer, _ambito) {
-    const opIzq = Aritmetica(_opizq, _ambito);
-    const opDer = Aritmetica(_opDer, _ambito);
+    var opIzq = Aritmetica(_opizq, _ambito);
+    var opDer = Aritmetica(_opDer, _ambito);
+    
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
+
+
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo);
     if (opIzq.tipo === TIPO_DATO.CADENA || opDer.tipo === TIPO_DATO.CADENA) {
         return {
@@ -336,7 +360,7 @@ function division(_opizq, _opDer, _ambito) {
             if (opIzq.tipo === TIPO_DATO.BOOL || opDer.tipo === TIPO_DATO.BOOL) {
                 const resultado = "Error no se puede hacer division con booleanos";
                 return {
-                    valor: resultado,   
+                    valor: resultado,
                     tipo: tipores,
                     linea: _opizq.linea,
                     columna: _opizq.columna
@@ -350,7 +374,6 @@ function division(_opizq, _opDer, _ambito) {
                 }
             }
             if (opDer.valor === 0) {
-                console.log("Error división entre cero")
                 const resultado = "Error división entre cero";
                 return {
                     valor: resultado,
@@ -370,18 +393,24 @@ function division(_opizq, _opDer, _ambito) {
     }
 }
 
-function potencia(_opizq, _opDer, _ambito){
-    const opIzq = Aritmetica(_opizq, _ambito)  
-    const opDer = Aritmetica(_opDer, _ambito)
-    
-    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)  
+function potencia(_opizq, _opDer, _ambito) {
+    var opIzq = Aritmetica(_opizq, _ambito)
+    var opDer = Aritmetica(_opDer, _ambito)   
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
+
+    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
 
 
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
             if (opIzq.tipo === TIPO_DATO.ENTERO || opDer.tipo === TIPO_DATO.ENTERO) {
                 if (opIzq.tipo === TIPO_DATO.ENTERO) {
-                    if(opDer.tipo === TIPO_DATO.ENTERO){
+                    if (opDer.tipo === TIPO_DATO.ENTERO) {
                         const resultado = Math.pow(opIzq.valor, opDer.valor);
                         return {
                             valor: resultado,
@@ -389,115 +418,118 @@ function potencia(_opizq, _opDer, _ambito){
                             linea: _opizq.linea,
                             columna: _opizq.columna
                         }
-                } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
-                    const resultado = Math.pow(opIzq.valor, opDer.valor);
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
-                    }
-                }
-            }else if(opIzq.tipo === TIPO_DATO.DECIMAL){
-                if(opDer.tipo === TIPO_DATO.ENTERO){
-                    const resultado = Math.pow(opIzq.valor, opDer.valor);
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
-                    }
-                } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
-                    const resultado = Math.pow(opIzq.valor, opDer.valor);
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
-                    }
-                }
-            }
-        }
-    }else{
-        const resultado = "Error no se puede hacer potencia";
-        return {
-            valor: resultado,
-            tipo: tipores,
-            linea: _opizq.linea,
-            columna: _opizq.columna
-        }
-    }
-    }
-}
-
-function modular(_opizq, _opDer, _ambito){
-    const opIzq = Aritmetica(_opizq, _ambito)  
-    const opDer = Aritmetica(_opDer, _ambito)
-    console.log(opIzq);
-    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
-    if (tipores != null) {
-        if (tipores === TIPO_DATO.DECIMAL) {
-            if (opIzq.tipo === TIPO_DATO.ENTERO || opDer.tipo === TIPO_DATO.ENTERO) {
-                if (opIzq.tipo === TIPO_DATO.ENTERO) {
-                    if(opDer.tipo === TIPO_DATO.ENTERO){
-                        const resultado = opIzq.valor % opDer.valor;
-                        console.log(resultado, "mod1");
+                    } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
+                        const resultado = Math.pow(opIzq.valor, opDer.valor);
                         return {
                             valor: resultado,
                             tipo: tipores,
                             linea: _opizq.linea,
                             columna: _opizq.columna
                         }
-                } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
-                    const resultado = opIzq.valor % opDer.valor;
-                    console.log(resultado, "mod2");
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
                     }
-                }
-            }else if(opIzq.tipo === TIPO_DATO.DECIMAL){
-                
-                if(opDer.tipo === TIPO_DATO.ENTERO){
-                    
-                    const resultado = opIzq.valor % opDer.valor;
-                    //console.log(resultado);
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
-                    }
-                } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
-                    const resultado = opIzq.valor % opDer.valor;
-                    //console.log(resultado);
-                    return {
-                        valor: resultado,
-                        tipo: tipores,
-                        linea: _opizq.linea,
-                        columna: _opizq.columna
+                } else if (opIzq.tipo === TIPO_DATO.DECIMAL) {
+                    if (opDer.tipo === TIPO_DATO.ENTERO) {
+                        const resultado = Math.pow(opIzq.valor, opDer.valor);
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
+                    } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
+                        const resultado = Math.pow(opIzq.valor, opDer.valor);
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
                     }
                 }
             }
+        } else {
+            const resultado = "Error no se puede hacer potencia";
+            return {
+                valor: resultado,
+                tipo: tipores,
+                linea: _opizq.linea,
+                columna: _opizq.columna
+            }
         }
-    }else{
-
-        const resultado = "Error no se puede hacer modulo";
-        return {
-            valor: resultado,
-            tipo: tipores,
-            linea: _opizq.linea,
-            columna: _opizq.columna
-        }
-    }
     }
 }
 
-function menosUnario(_opDer, _ambito){
-    console.log(_opDer);
-    const opDer = Aritmetica(_opDer, _ambito)
+function modular(_opizq, _opDer, _ambito) {
+    var opIzq = Aritmetica(_opizq, _ambito)
+    var opDer = Aritmetica(_opDer, _ambito)   
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
+    if(opIzq === undefined){
+        opIzq = _opizq; 
+    }
+    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
+    if (tipores != null) {
+        if (tipores === TIPO_DATO.DECIMAL) {
+            if (opIzq.tipo === TIPO_DATO.ENTERO || opDer.tipo === TIPO_DATO.ENTERO) {
+                if (opIzq.tipo === TIPO_DATO.ENTERO) {
+                    if (opDer.tipo === TIPO_DATO.ENTERO) {
+                        const resultado = opIzq.valor % opDer.valor;
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
+                    } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
+                        const resultado = opIzq.valor % opDer.valor;
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
+                    }
+                } else if (opIzq.tipo === TIPO_DATO.DECIMAL) {
+
+                    if (opDer.tipo === TIPO_DATO.ENTERO) {
+
+                        const resultado = opIzq.valor % opDer.valor;
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
+                    } else if (opDer.tipo === TIPO_DATO.DECIMAL) {
+                        const resultado = opIzq.valor % opDer.valor;
+                        return {
+                            valor: resultado,
+                            tipo: tipores,
+                            linea: _opizq.linea,
+                            columna: _opizq.columna
+                        }
+                    }
+                }
+            }
+        } else {
+
+            const resultado = "Error no se puede hacer modulo";
+            return {
+                valor: resultado,
+                tipo: tipores,
+                linea: _opizq.linea,
+                columna: _opizq.columna
+            }
+        }
+    }
+}
+
+function menosUnario(_opDer, _ambito) {
+    var opDer = Aritmetica(_opDer, _ambito)
+    if(opDer === undefined){
+        opDer = _opDer; 
+    }
     if (opDer.tipo === TIPO_DATO.DECIMAL || opDer.tipo === TIPO_DATO.ENTERO) {
         const resultado = opDer.valor * -1;
         return {
@@ -506,7 +538,7 @@ function menosUnario(_opDer, _ambito){
             linea: _opDer.linea,
             columna: _opDer.columna
         }
-    }else{
+    } else {
         const resultado = "Error no se puede hacer negación.";
         return {
             valor: resultado,

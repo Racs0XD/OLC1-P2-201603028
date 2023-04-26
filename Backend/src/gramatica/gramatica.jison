@@ -107,16 +107,38 @@ OPCIONESCUERPO: OPCIONESCUERPO CUERPO{$1.push($2); $$=$1;}
 CUERPO: DEC_VAR ptcoma {$$=$1;}                                           //DECLARACION DE CADA COMPONENTE DEL CUERPO DE MANERA RECURSIVA
         |ASIG_VAR ptcoma {$$=$1;}
         |METODOS {$$=$1;}
+        |FUNCIONES {$$=$1;}
         |MAIN {$$=$1;}
 ;
 METODOS: Rvoid identificador parA parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoMetodo($2, null, $6, this._$.first_line,this._$.first_column+1)}
-        
+        | Rvoid identificador parA LPARAMETROS parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoMetodo($2, $4, $7, this._$.first_line,this._$.first_column+1)}
+;
+
+LLAMADAMETODO: identificador parA parC ptcoma {$$ = INSTRUCCION.nuevaLlamada($1, null, this._$.first_line,this._$.first_column+1)}
+              | identificador parA LISTAVALORES parC ptcoma {$$ = INSTRUCCION.nuevaLlamada($1, $3, this._$.first_line,this._$.first_column+1)}
+;
+
+LISTAVALORES: LISTAVALORES coma EXPRESION {$1.push($3); $$=$1}
+            | EXPRESION {$$=[$1]}
+;
+
+FUNCIONES: TIPO identificador parA parC llaveA INSTRUCCIONES Rreturn EXPRESION ptcoma llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, null, $6, $7, this._$.first_line,this._$.first_column+1)}
+        | TIPO identificador parA LPARAMETROS parC llaveA INSTRUCCIONES Rreturn EXPRESION ptcoma llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, $4, $7, $8, this._$.first_line,this._$.first_column+1)}
+;
+
+LPARAMETROS: LPARAMETROS coma PARAMETROS {$1.push($3); $$=$1;}
+               | PARAMETROS {$$=[$1];}
+;
+
+PARAMETROS: TIPO identificador {$$ = INSTRUCCION.nuevaDeclaracion($2, null, $1, this._$.first_line,this._$.first_column+1)}
+      | TIPO menor TIPO mayor identificador {$$ = INSTRUCCION.nuevaDeclaracion($5, null, $1, this._$.first_line,this._$.first_column+1)}
+      | TIPO TIPO identificador {$$ = INSTRUCCION.nuevaDeclaracion($3, null, $2, this._$.first_line,this._$.first_column+1)}
 ;
 
 MAIN: Rmain identificador parA parC ptcoma {$$ = INSTRUCCION.nuevoMain($2, null, this._$.first_line,this._$.first_column+1)}
-      
-       
+
 ;
+
 DEC_VAR: TIPO identificador  {$$= INSTRUCCION.nuevaDeclaracion($2,null, $1,this._$.first_line, this._$.first_column+1)}
         |TIPO identificador igual EXPRESION  {$$= INSTRUCCION.nuevaDeclaracion($2, $4, $1,this._$.first_line, this._$.first_column+1)}      
 ;
@@ -134,7 +156,8 @@ INSTRUCCIONES: INSTRUCCIONES INSTRUCCION {$$ = $1; $1.push($2);}
             |INSTRUCCION {$$ = [$1];}
 ;
 
-INSTRUCCION: DEC_VAR ptcoma {$$=$1}
+INSTRUCCION: LLAMADAMETODO {$$=$1}
+        |DEC_VAR ptcoma {$$=$1}
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
         |IF {$$=$1}
