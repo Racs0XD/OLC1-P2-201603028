@@ -9,13 +9,17 @@ const Cadenas = require("./Cadenas");
 
 
 function Aritmetica(_expresion, _ambito) {
-    //console.log(_expresion )
     if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
-        const EjecutarFuncion = require("../Instruccion/Ejecutar");
+        const EjecutarFuncion = require("../Instruccion/EjecutarFuncion");;
         var mensaje = EjecutarFuncion(_expresion, _ambito)
         if(mensaje!=null){
-            mensaje
-            console.log(mensaje)
+            if(mensaje === ""){
+                mensaje = "vacío"
+                return mensaje 
+            } else {
+                return mensaje 
+            }
+              
         }
     } else if (_expresion.tipo === TIPO_VALOR.DECIMAL || 
         _expresion.tipo === TIPO_VALOR.BOOL || 
@@ -54,7 +58,7 @@ function Aritmetica(_expresion, _ambito) {
 
 function suma(_opizq, _opDer, _ambito) {
     var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)   
+    var opDer = Aritmetica(_opDer, _ambito)     
     if(opDer === undefined){
         opDer = _opDer; 
     }

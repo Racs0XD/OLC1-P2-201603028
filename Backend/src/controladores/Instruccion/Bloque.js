@@ -19,12 +19,15 @@ const Actualizarlista = require("./ActualizarLista")
 const Chararrayfuncion = require("./CharArray")
 
 function Bloque(_instrucciones,_ambito){
-    //console.log(_instrucciones)
+    // console.log("====================================")
+    //         console.log(_instrucciones)
+    //         console.log("====================================")
     var cadena=""
     var cBreak = false;
     var cContinue = false;
     var cReturn = false;
     _instrucciones.forEach(instruccion => {
+        
         if(cBreak){
             return{
                 cBreak: cBreak,
@@ -63,7 +66,7 @@ function Bloque(_instrucciones,_ambito){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
-            const EjecutarFuncion = require("./EjecutarFuncion");
+            const EjecutarFuncion = require("./Ejecutar");
             var mensaje = EjecutarFuncion(instruccion, _ambito)
             if(mensaje!=null){
                 cadena+=mensaje

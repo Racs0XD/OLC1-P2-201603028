@@ -1,7 +1,7 @@
 const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion");
 const TIPO_OPERACION = require("../Enums/TipoOperacion");
 const TIPO_VALOR = require("../Enums/TipoValor");
-const Aritmetica = require("./Aritmetica.js");
+const Aritmetica = require("./Aritmetica");
 const Logica = require("./OpLogica");
 const Relacional = require("./Relacional");
 const Ternario = require("./Ternario");
@@ -11,7 +11,7 @@ const ValorExpresion = require("./ValorExpresion");
 
 
 function Operacion(_expresion, _ambito) {
-   
+    //console.log(_expresion)
     if (_expresion.tipo === TIPO_VALOR.DECIMAL ||
         _expresion.tipo === TIPO_VALOR.BOOL ||
         _expresion.tipo === TIPO_VALOR.ENTERO ||

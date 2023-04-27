@@ -21,9 +21,10 @@ function Ejecutar(_instruccion, _ambito) {
     if (ejecutar.lista_parametro != null) {
         if (_instruccion.lista_valores != null && ejecutar.lista_parametro.length == _instruccion.lista_valores.length) {
             var error = false;
+            
             for (let i = 0; i < ejecutar.lista_parametro.length; i++) {
                 var declaracionAsignacion = Instruccion.nuevaDeclaracion(ejecutar.lista_parametro[i].id, _instruccion.lista_valores[i], ejecutar.lista_parametro[i].tipo_dato, _instruccion.linea, _instruccion.columna)
-                var mensaje = DecParametro(declaracionAsignacion, nuevoAmbito)
+                var mensaje = DecParametro(declaracionAsignacion, nuevoAmbito)                
                 if (mensaje != null) {
                     error = true
                     cadena += mensaje + '\n'
