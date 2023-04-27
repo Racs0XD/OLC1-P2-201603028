@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Grid, Header, Icon, Menu, Segment, TextArea } from 'semantic-ui-react'
 
 function Editor(props) {
+    const [cursorPos, setCursorPos] = useState({ line: 1, col: 1 });
+
+    const handleKeyUp = () => {
+        const textArea = document.getElementById('textArea');
+        const text = textArea.value;
+        const cursorPosStart = textArea.selectionStart;
+        const cursorLine = text.substr(0, cursorPosStart).split('\n').length;
+        const cursorCol = cursorPosStart - text.lastIndexOf('\n', cursorPosStart - 1);
+        setCursorPos({ line: cursorLine, col: cursorCol });
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+            handleKeyUp();
+        }
+    }
     return (
-        
+
         <Segment className="Header">
             <Header size='large'>
                 <Icon name='edit' />
@@ -70,13 +86,21 @@ function Editor(props) {
                         </Menu>
                         <Form>
                             <TextArea
+                                id="textArea"
+                                className="Editor"
                                 value={props.currentText}
                                 style={{ minHeight: 500, maxHeight: 500, fontFamily: "consolas" }}
-                                onChange={props.updateText}
-                                spellCheck={false}
-                                wrap={'off'}
+                                onChange={(e) => {
+                                    props.setCurrentText(e.target.value);
+                                    handleKeyUp();
+                                }}
+                                onKeyDown={handleKeyDown}
                             />
+                            <Header size='tiny' className='posicionCursor'>
+                                Linea {cursorPos.line}, Columna {cursorPos.col}
+                            </Header>
                         </Form>
+
                     </Grid.Column>
                     <Grid.Column>
                         <Segment>
