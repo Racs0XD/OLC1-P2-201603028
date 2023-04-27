@@ -121,7 +121,6 @@ function menor(_opIzq, _opDer, _ambito) {
 function menorigual(_opIzq, _opDer, _ambito) {
     const opIzq = Relacional(_opIzq, _ambito)
     const opDer = Relacional(_opDer, _ambito)
-
     if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
         (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
         (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||

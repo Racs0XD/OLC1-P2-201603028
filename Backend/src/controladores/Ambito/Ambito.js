@@ -28,6 +28,7 @@ class Ambito {
         this.nombre = _actual;
         this.tablaSimbolos = new Map();
         this.tablaMetodos = new Map();        
+        this.tablaFunciones = new Map();
     }
 
     

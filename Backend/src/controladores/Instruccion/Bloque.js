@@ -11,8 +11,15 @@ const DoWhile = require("./DoWhile");
 const For = require("./For");
 const Incremento = require("./Incremento");
 const Decremento = require("./Decremento");
+const Declaracionvector = require("./DecVector")
+const Asignacionvector = require("./AsVector")
+const Declaracionlista = require("./DecLista")
+const Asignacionlista = require("./AsLista")
+const Actualizarlista = require("./ActualizarLista")
+const Chararrayfuncion = require("./CharArray")
 
 function Bloque(_instrucciones,_ambito){
+    //console.log(_instrucciones)
     var cadena=""
     var cBreak = false;
     var cContinue = false;
@@ -50,14 +57,49 @@ function Bloque(_instrucciones,_ambito){
                 cadena += mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
-            const Ejecutar = require("./Ejecutar");
-            var mensaje = Ejecutar(instruccion, _ambito)
+            const EjecutarMetodo = require("./Ejecutar");
+            var mensaje = EjecutarMetodo(instruccion, _ambito)
             if(mensaje!=null){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
-            const Ejecutar = require("./Ejecutar");
-            var mensaje = Ejecutar(instruccion, _ambito)
+            const EjecutarFuncion = require("./EjecutarFuncion");
+            var mensaje = EjecutarFuncion(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        } else if(instruccion.tipo === TIPO_INSTRUCCION.DEC_VECTOR){
+            var mensaje = Declaracionvector(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }
+        else if(instruccion.tipo === TIPO_INSTRUCCION.AS_VECTOR){
+            var mensaje = Asignacionvector(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }
+        else if(instruccion.tipo === TIPO_INSTRUCCION.ADD_LISTA){
+            var mensaje = Asignacionlista(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }
+        else if(instruccion.tipo === TIPO_INSTRUCCION.SET_LISTA){
+            var mensaje = Actualizarlista(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }
+        else if(instruccion.tipo === TIPO_INSTRUCCION.DEC_LISTA){
+            var mensaje = Declaracionlista(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+        }
+        else if(instruccion.tipo === TIPO_INSTRUCCION.CHARARRAY){
+            var mensaje = Chararrayfuncion(instruccion, _ambito)
             if(mensaje!=null){
                 cadena+=mensaje
             }

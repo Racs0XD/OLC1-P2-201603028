@@ -5,11 +5,13 @@ const Aritmetica = require("./Aritmetica.js");
 const Logica = require("./OpLogica");
 const Relacional = require("./Relacional");
 const Ternario = require("./Ternario");
+const Cadenas = require("./Cadenas");
 const ValorExpresion = require("./ValorExpresion");
 
 
 
 function Operacion(_expresion, _ambito) {
+   
     if (_expresion.tipo === TIPO_VALOR.DECIMAL ||
         _expresion.tipo === TIPO_VALOR.BOOL ||
         _expresion.tipo === TIPO_VALOR.ENTERO ||
@@ -18,7 +20,7 @@ function Operacion(_expresion, _ambito) {
         _expresion.tipo === TIPO_VALOR.CHAR ||
         _expresion.tipo === TIPO_VALOR.VECTOR ||
         _expresion.tipo === TIPO_VALOR.LISTA ||
-        _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
+        _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {            
         return ValorExpresion(_expresion, _ambito);
     }
     else if (_expresion.tipo === TIPO_OPERACION.SUMA ||
@@ -37,13 +39,21 @@ function Operacion(_expresion, _ambito) {
         _expresion.tipo === TIPO_OPERACION.MAYOR ||
         _expresion.tipo === TIPO_OPERACION.MAYORIGUAL) {
         return Relacional(_expresion, _ambito);
-    } else if(_expresion.tipo===TIPO_OPERACION.TERNARIO){
-        return Ternario(_expresion, _ambito,_Error, _entorno,Simbol)
-    } else if (   _expresion.tipo === TIPO_OPERACION.OR ||
+    } else if (_expresion.tipo === TIPO_OPERACION.TERNARIO) {
+        return Ternario(_expresion, _ambito, _Error, _entorno, Simbol)
+    } else if (_expresion.tipo === TIPO_OPERACION.OR ||
         _expresion.tipo === TIPO_OPERACION.AND ||
         _expresion.tipo === TIPO_OPERACION.NOT) {
         return Logica(_expresion, _ambito)
-    } 
+    } else if (_expresion.tipo === TIPO_OPERACION.TOUPPER ||
+        _expresion.tipo === TIPO_OPERACION.TOLOWER ||
+        _expresion.tipo === TIPO_OPERACION.LENGTH ||
+        _expresion.tipo === TIPO_OPERACION.TRUNCATE ||
+        _expresion.tipo === TIPO_OPERACION.ROUND ||
+        _expresion.tipo === TIPO_OPERACION.TYPEOF ||
+        _expresion.tipo === TIPO_OPERACION.TOSTRING) {
+        return Cadenas(_expresion, _ambito)
+    }
 
 }
 module.exports = Operacion

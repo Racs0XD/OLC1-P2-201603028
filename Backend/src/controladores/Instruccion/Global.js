@@ -2,10 +2,12 @@ const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion")
 const Asignacion = require("./Asignacion")
 const Declaracion = require("./Declaracion")
 const DecMetodo = require("./DecMetodo")
+const DecFuncion = require("./DecFuncion")
 const Main = require("./Main")
 
 
 function Global(_instrucciones, _ambito){
+    //console.log(_instrucciones)
     let _ninstruccion = _instrucciones.LIns
     let errores = []
     var cadena = ""
@@ -43,6 +45,11 @@ function Global(_instrucciones, _ambito){
             if (mensaje != null) {
                 cadena += mensaje + "\n"
             }
+        }else if (_ninstruccion[i].tipo === TIPO_INSTRUCCION.DEC_FUNCION) {
+            var mensaje = DecFuncion(_ninstruccion[i], _ambito)
+            if (mensaje != null) {
+                cadena += mensaje + "\n"
+            }
         }
 
     }
@@ -51,7 +58,6 @@ function Global(_instrucciones, _ambito){
         
         if(_ninstruccion[i].tipo===TIPO_INSTRUCCION.MAIN){
             var mensaje = Main(_ninstruccion[i],_ambito)
-            //console.log(mensaje)
             if(mensaje!=null){
                 cadena+= mensaje+ "\n"
         }

@@ -12,8 +12,9 @@ function For(_instruccion, _ambito){
         Declaracion(_instruccion.expresion, _ambito)
     }else if(_instruccion.expresion.tipo == 'ASIGNACION'){
         Asignacion(_instruccion.expresion, _ambito)
-    }
+    }    
     var operacion = Operacion(_instruccion.condicion, _ambito)   
+    //console.log(operacion)
     if(operacion.tipo === TIPO_DATO.BOOL){        
         while(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)

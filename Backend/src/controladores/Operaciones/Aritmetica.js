@@ -4,12 +4,35 @@ const TIPO_OPERACION = require("../Enums/TipoOperacion")
 const TIPO_VALOR = require("../Enums/TipoValor")
 const TipoResultado = require("./TipoResultado")
 const ValorExpresion = require("./ValorExpresion")
+const Cadenas = require("./Cadenas");
+
 
 
 function Aritmetica(_expresion, _ambito) {
-    if (_expresion.tipo === TIPO_VALOR.DECIMAL || _expresion.tipo === TIPO_VALOR.BOOL || _expresion.tipo === TIPO_VALOR.ENTERO ||
-        _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || _expresion.tipo === TIPO_VALOR.CHAR || _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
+    //console.log(_expresion )
+    if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
+        const EjecutarFuncion = require("../Instruccion/Ejecutar");
+        var mensaje = EjecutarFuncion(_expresion, _ambito)
+        if(mensaje!=null){
+            mensaje
+            console.log(mensaje)
+        }
+    } else if (_expresion.tipo === TIPO_VALOR.DECIMAL || 
+        _expresion.tipo === TIPO_VALOR.BOOL || 
+        _expresion.tipo === TIPO_VALOR.ENTERO ||
+        _expresion.tipo === TIPO_VALOR.CADENA || 
+        _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || 
+        _expresion.tipo === TIPO_VALOR.CHAR || 
+        _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
       return ValorExpresion(_expresion, _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.TOUPPER ||
+        _expresion.tipo === TIPO_OPERACION.TOLOWER ||
+        _expresion.tipo === TIPO_OPERACION.LENGTH ||
+        _expresion.tipo === TIPO_OPERACION.TRUNCATE ||
+        _expresion.tipo === TIPO_OPERACION.ROUND ||
+        _expresion.tipo === TIPO_OPERACION.TYPEOF ||
+        _expresion.tipo === TIPO_OPERACION.TOSTRING) {
+        return Cadenas(_expresion, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.SUMA) {
       return suma(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.RESTA) {

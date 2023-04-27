@@ -81,7 +81,7 @@ const Instruccion = {
             linea: _linea,
             columna: _columna
         }
-    }, nuevaFuncion: function (_tipo, _nombre, _lista_parametros, _instrucciones, _retorno, _linea, _columna) {
+    }, nuevaFuncion: function (_tipo, _nombre, _lista_parametros, _instrucciones, _retorno, _linea, _columna) {   
         return {
             tipo: TIPO_INSTRUCCION.DEC_FUNCION,
             tipof: _tipo,
@@ -97,6 +97,76 @@ const Instruccion = {
             tipo: TIPO_INSTRUCCION.LLAMADA_FUNCION,
             nombre: _nombre,
             lista_valores: _lista_valores,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevaDeclaracionVector: function (_tipo, _id, _tipo2, _valor, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.DEC_VECTOR,
+            tipov: _tipo,
+            id: _id,
+            tipov2: _tipo2,
+            valor: _valor,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevaAsignacionVector: function (_id, _expresion, _nuevovalor, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.AS_VECTOR,
+            id: _id,
+            indice: _expresion,
+            valor: _nuevovalor,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoValorVector: function (_valor, _indice, _tipo, _linea, _columna) {
+        return {
+            valor: _valor,
+            indice: _indice,
+            tipo: _tipo,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoValorLista: function (_valor, _indice, _tipo, _linea, _columna) {
+        return {
+            valor: _valor,
+            indice: _indice,
+            tipo: _tipo,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevaDeclaracionLista: function (_tipo, _id, _tipo2, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.DEC_LISTA,
+            tipov: _tipo,
+            id: _id,
+            tipov2: _tipo2,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevaAsignacionLista: function (_id, _expresion, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.ADD_LISTA,
+            id: _id,
+            expresion: _expresion,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoUpdateLista: function (_id, _expresion, _nuevovalor, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.SET_LISTA,
+            id: _id,
+            expresion: _expresion,
+            valor: _nuevovalor,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoCharArray: function (_tipo, _id, _expresion, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.CHARARRAY,
+            tipov: _tipo,
+            id: _id,
+            expresion: _expresion,
             linea: _linea,
             columna: _columna
         }
