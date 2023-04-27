@@ -15,9 +15,15 @@ function Aritmetica(_expresion, _ambito) {
         if(mensaje!=null){
             if(mensaje === ""){
                 mensaje = "vacío"
-                return mensaje 
+                return {
+                    valor:mensaje,
+                    tipo:TIPO_DATO.CADENA
+                } 
             } else {
-                return mensaje 
+                return {
+                    valor:mensaje,
+                    tipo:TIPO_DATO.CADENA
+                } 
             }
               
         }
@@ -58,16 +64,14 @@ function Aritmetica(_expresion, _ambito) {
 
 function suma(_opizq, _opDer, _ambito) {
     var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)     
+    var opDer = Aritmetica(_opDer, _ambito)
     if(opDer === undefined){
         opDer = _opDer; 
     }
     if(opIzq === undefined){
         opIzq = _opizq; 
-    }
+    } 
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
-
-
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
             if (opIzq.tipo === TIPO_DATO.BOOL || opDer.tipo === TIPO_DATO.BOOL) {
