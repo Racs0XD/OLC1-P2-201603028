@@ -160,7 +160,7 @@ PARAMETROS: TIPO identificador {$$ = INSTRUCCION.nuevaDeclaracion($2, null, $1, 
 ;
 
 MAIN: Rmain identificador parA parC ptcoma {$$ = INSTRUCCION.nuevoMain($2, null, this._$.first_line,this._$.first_column+1)}
-
+        | Rmain identificador parA LISTAVALORES parC ptcoma {$$ = INSTRUCCION.nuevoMain($2, $4, this._$.first_line,this._$.first_column+1)}
 ;
 
 DEC_VAR: TIPO identificador  {$$= INSTRUCCION.nuevaDeclaracion($2,null, $1,this._$.first_line, this._$.first_column+1)}
@@ -201,6 +201,7 @@ INSTRUCCION: LLAMADAFUNCION {$$=$1}
         |BREAK {$$=$1}
         |CONTINUE {$$=$1}
         |RETURN {$$=$1}
+        |INSTRUCCIONFOR ptcoma {$$=$1}
         
 ;
 
