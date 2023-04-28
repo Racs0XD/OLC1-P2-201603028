@@ -6,15 +6,21 @@ function SentenciaIfElseIf(_instruccion, _ambito) {
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito);
     var cBreak = false
+    var cContinue = false
+    var cReturn = false
     if (operacion.tipo === TIPO_DATO.BOOL) {
         if (operacion.valor) {
             var nuevoAmbito = new Ambito(_ambito)
             const Bloque = require("./Bloque");
             var ejecutar = Bloque(_instruccion.instruccionesIf, nuevoAmbito)
             cBreak = ejecutar.cBreak;
+            cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn;
             mensaje += ejecutar.cadena
             return {
                 cBreak: cBreak,
+                cContinue: cContinue,
+                cReturn: cReturn,
                 cadena: mensaje
             }
         }
@@ -26,9 +32,13 @@ function SentenciaIfElseIf(_instruccion, _ambito) {
                     const Bloque = require("./Bloque");
                     var ejecutar = Bloque(_instruccion.lista_elseif[i].instruccionesElseIf, nuevoAmbito)
                     cBreak = ejecutar.cBreak;
+                    cContinue = ejecutar.cContinue
+                    cReturn = ejecutar.cReturn;
                     mensaje += ejecutar.cadena
                     return {
                         cBreak: cBreak,
+                        cContinue: cContinue,
+                        cReturn: cReturn,
                         cadena: mensaje
                     }
                 }
@@ -37,15 +47,19 @@ function SentenciaIfElseIf(_instruccion, _ambito) {
                 mensaje += `Error: No es una condicion válida para el if... Linea: ${_instruccion.lista_elseif[i].linea} Columna: ${_instruccion.lista_elseif[i].columna}`
             }
         }
-        if(_instruccion.instruccionesElse!=null){            
+        if (_instruccion.instruccionesElse != null) {
             const Bloque = require("./Bloque");
             var nuevoAmbito = new Ambito(_ambito);
             var ejecutar = Bloque(_instruccion.instruccionesElse, nuevoAmbito)
             cBreak = ejecutar.cBreak;
+            cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn;
             mensaje += ejecutar.cadena
         }
         return {
             cBreak: cBreak,
+            cContinue: cContinue,
+            cReturn: cReturn,
             cadena: mensaje
         }
     }

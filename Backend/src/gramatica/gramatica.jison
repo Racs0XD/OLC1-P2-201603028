@@ -146,8 +146,8 @@ LISTAVALORES: LISTAVALORES coma EXPRESION {$1.push($3); $$=$1}
             | EXPRESION {$$=[$1]}
 ;
 
-FUNCIONES: TIPO identificador parA parC llaveA INSTRUCCIONES Rreturn EXPRESION ptcoma llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, null, $6, $7, this._$.first_line,this._$.first_column+1)}
-        | TIPO identificador parA LPARAMETROS parC llaveA INSTRUCCIONES Rreturn EXPRESION ptcoma llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, $4, $7, $8, this._$.first_line,this._$.first_column+1)}
+FUNCIONES: TIPO identificador parA parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, null, $6, $7, this._$.first_line,this._$.first_column+1)}
+        | TIPO identificador parA LPARAMETROS parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevaFuncion($1, $2, $4, $7, $8, this._$.first_line,this._$.first_column+1)}
 ;
 
 LPARAMETROS: LPARAMETROS coma PARAMETROS {$1.push($3); $$=$1;}
@@ -323,4 +323,3 @@ EXPRESION: EXPRESION suma EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3
          | identificador{$$= INSTRUCCION.nuevoValor($1,TIPO_VALOR.IDENTIFICADOR,this._$.first_line, this._$.first_column+1);}
          | LLAMADAFUNCION {$$=$1}
 ;
-

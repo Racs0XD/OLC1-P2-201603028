@@ -265,9 +265,10 @@ const Instruccion = {
             linea: _linea,
             columna: _columna
         }
-    }, nuevoReturn: function (_linea, _columna) {
+    }, nuevoReturn: function (_retorno,_linea, _columna) {
         return {
             tipo: TIPO_INSTRUCCION.RETURN,
+            retorno: _retorno,
             linea: _linea,
             columna: _columna
         }

@@ -12,7 +12,7 @@ function Chararrayfuncion(_instruccion, _ambito){
                 nuevoarreglo.push(valor.valor[i])
             }
             
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }

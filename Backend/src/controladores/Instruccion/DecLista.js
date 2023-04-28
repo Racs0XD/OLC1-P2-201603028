@@ -8,7 +8,7 @@ function Declaracionlista(_instruccion, _ambito){
 
             var nuevoarreglo = new Array();
 
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "\n Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }
@@ -28,7 +28,7 @@ function Declaracionlista(_instruccion, _ambito){
 
             var nuevoarreglo = new Array();
 
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "\n Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }
@@ -49,7 +49,7 @@ function Declaracionlista(_instruccion, _ambito){
 
             var nuevoarreglo = new Array();
 
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "\n Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }
@@ -69,7 +69,7 @@ function Declaracionlista(_instruccion, _ambito){
 
             var nuevoarreglo = new Array();
 
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }
@@ -89,7 +89,7 @@ function Declaracionlista(_instruccion, _ambito){
 
             var nuevoarreglo = new Array();
 
-            const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", nuevoarreglo, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
+            const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", nuevoarreglo, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
                 if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
                     return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
                 }

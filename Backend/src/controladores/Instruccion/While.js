@@ -17,6 +17,9 @@ function While(_instruccion, _ambito){
             if(ejecutar.cContinue){
                 operacion = Operacion(_instruccion.expresion, _ambito)
             }
+            if(ejecutar.cReturn){
+                operacion = Operacion(_instruccion.expresion, _ambito)
+            }
             operacion = Operacion(_instruccion.expresion, _ambito)
         }        
         return mensaje

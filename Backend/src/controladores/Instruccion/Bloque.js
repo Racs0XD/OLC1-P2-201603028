@@ -62,12 +62,14 @@ function Bloque(_instrucciones,_ambito){
         } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
             const EjecutarMetodo = require("./Ejecutar");
             var mensaje = EjecutarMetodo(instruccion, _ambito)
+            cReturn = false;
             if(mensaje!=null){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
             const EjecutarFuncion = require("./Ejecutar");
             var mensaje = EjecutarFuncion(instruccion, _ambito)
+            cReturn = false;
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -109,7 +111,9 @@ function Bloque(_instrucciones,_ambito){
         } else if(instruccion.tipo === TIPO_INSTRUCCION.IF){
             var ejecutar = SentenciaIf(instruccion, _ambito)
             var mensaje = ejecutar.cadena
-            cBreak = ejecutar.cBreak
+            cBreak = ejecutar.cContinue
+            cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -117,6 +121,8 @@ function Bloque(_instrucciones,_ambito){
             var ejecutar = SentenciaIfElse(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
+            cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -124,14 +130,17 @@ function Bloque(_instrucciones,_ambito){
             var ejecutar = SentenciaIfElseIf(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
+            cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn
             if(mensaje!=null){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.SWITCH){
             var ejecutar = Switch(instruccion, _ambito)
             var mensaje = ejecutar.cadena
-            cBreak = false
+            cBreak = ejecutar.cBreak
             cContinue = ejecutar.cContinue
+            cReturn = ejecutar.cReturn
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -139,6 +148,7 @@ function Bloque(_instrucciones,_ambito){
             var mensaje = While(instruccion, _ambito)
             cBreak = false
             cContinue = false
+            cReturn = false
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -146,6 +156,7 @@ function Bloque(_instrucciones,_ambito){
             var mensaje = DoWhile(instruccion, _ambito)
             cBreak = false
             cContinue = false
+            cReturn = false
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -153,6 +164,7 @@ function Bloque(_instrucciones,_ambito){
             var mensaje = For(instruccion, _ambito)
             cBreak = false
             cContinue = false
+            cReturn = false
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -189,6 +201,7 @@ function Bloque(_instrucciones,_ambito){
     return {
         cBreak: cBreak,
         cContinue: cContinue,
+        cReturn: cReturn,
         cadena:cadena
     }
 

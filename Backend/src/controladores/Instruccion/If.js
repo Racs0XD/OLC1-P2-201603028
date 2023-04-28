@@ -5,17 +5,23 @@ const Operacion = require("../Operaciones/Operacion");
 function SentenciaIf(_instruccion, _ambito){
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito);
-    var cBreak=false    
+    var cBreak=false  
+    var cContinue=false 
+    var cReturn=false 
     if(operacion.tipo === TIPO_DATO.BOOL){
         if(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)
             const Bloque = require("./Bloque");
             var ejecutar = Bloque(_instruccion.instrucciones,nuevoAmbito)
             cBreak= ejecutar.cBreak;
-            mensaje+=ejecutar.cadena
-        }
+            cContinue = ejecutar.cContinue
+            cReturn= ejecutar.cReturn;
+            mensaje+=ejecutar.cadena               
+        }              
         return {
             cBreak: cBreak,
+            cContinue: cContinue,
+            cReturn: cReturn,
             cadena: mensaje
         }
     }

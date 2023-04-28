@@ -16,7 +16,7 @@ function DecParametro(_instruccion, _ambito){
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.DECIMAL+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.DECIMAL, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -43,7 +43,7 @@ function DecParametro(_instruccion, _ambito){
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.ENTERO+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)        
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)        
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -56,7 +56,7 @@ function DecParametro(_instruccion, _ambito){
             op = Operacion(_instruccion.valor, _ambito)
             valor = String(op.valor)
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -75,7 +75,7 @@ function DecParametro(_instruccion, _ambito){
                 return "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.BOOL+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.BOOL, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -95,7 +95,7 @@ function DecParametro(_instruccion, _ambito){
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.CHAR+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.CHAR, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -114,7 +114,7 @@ function DecParametro(_instruccion, _ambito){
                 "Error: No es posible asignar el valor a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.LISTA+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, tipo, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, tipo, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -134,7 +134,7 @@ function DecParametro(_instruccion, _ambito){
                 "Error: No es posible asignar el valor a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.VECTOR+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
         }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "VARIABLE", valor, tipo, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, tipo, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }

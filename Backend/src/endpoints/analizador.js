@@ -6,7 +6,7 @@ const Global = require("../controladores/Instruccion/Global")
 module.exports = (parser, app) => {
 
     app.post('/analizar', (req, res) => {        
-        var prueba = req.body.entrada.toLowerCase()    
+        var prueba = req.body.entrada
         var ast = parser.parse(prueba)      
         const AmbitoGlobal= new Ambito(null,"Global") 
         var resultado

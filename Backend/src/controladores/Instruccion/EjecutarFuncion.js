@@ -2,6 +2,7 @@ const Ambito = require("../Ambito/Ambito")
 const Bloque = require("./Bloque")
 const DecParametro = require("./DecParametro")
 const Instruccion = require("./Instruccion")
+const Operacion = require("../Operaciones/Operacion")
 
 function EjecutarFuncion(_instruccion, _ambito) {
     //console.log(_instruccion)
@@ -38,9 +39,25 @@ function EjecutarFuncion(_instruccion, _ambito) {
             
             
             var ejecuta = Bloque(ejecutar.instrucciones, nuevoAmbito)
-            // console.log("====================================")
-            // console.log(ejecuta.cadena)
-            // console.log("====================================")
+            if(ejecuta.cReturn){
+                for (let i = 0; i < ejecutar.instrucciones.length; i++) {
+                    if(ejecutar.instrucciones[i].instrucciones != undefined){                        
+                        if(ejecutar.instrucciones[i].instrucciones[0].tipo=='RETURN'){
+                            //console.log(ejecutar.instrucciones[i].retorno)  
+                             
+                            if(ejecutar.instrucciones[i].instrucciones[0].retorno.tipo){
+                                return Operacion(ejecutar.instrucciones[i].instrucciones[0].retorno, nuevoAmbito).valor
+                            }
+                            return Operacion(ejecutar.instrucciones[i].instrucciones[0].retorno, nuevoAmbito).valor                    
+                        }
+                        
+                    }else if(ejecutar.instrucciones[i].tipo=='RETURN'){ 
+                        //console.log(Operacion(ejecutar.instrucciones[i].retorno, nuevoAmbito)  )
+                        return Operacion(ejecutar.instrucciones[i].retorno, nuevoAmbito).valor                    
+                    }
+
+                }
+            }
             var mensaje = ejecuta.cadena
             
             if (ejecuta.hayBreak) {

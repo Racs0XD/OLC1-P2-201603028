@@ -25,18 +25,18 @@ function Reportes(props) {
       </Header>
       <Menu inverted borderless className="Nav">
         <Menu.Item className='opcion'>
-          <Button color='violet' onClick={() => handleTabClick(2)} active={tab === 2}>Errores</Button>
+          <Button color='pink' onClick={() => handleTabClick(2)} active={tab === 3}>Símbolos</Button>
         </Menu.Item>
         <Menu.Item className='opcion'>
           <Button color='purple' onClick={() => handleTabClick(3)} active={tab === 4}>AST</Button>
         </Menu.Item>
         <Menu.Item className='opcion'>
-          <Button color='pink' onClick={() => handleTabClick(4)} active={tab === 3}>Símbolos</Button>
+          <Button color='pink' onClick={() => handleTabClick(4)} active={tab === 2}>Errores</Button>
         </Menu.Item>
       </Menu>
-      {tab === 2 && <Errores errores = {error} />}      
+      {tab === 2 && <TablaSimbolos simbolos = {simbolos} />}         
       {tab === 3 && <AST ast/>}
-      {tab === 4 && <TablaSimbolos simbolos = {simbolos} />}
+      {tab === 4 && <Errores errores = {error} />}   
 
     </Segment>
   );

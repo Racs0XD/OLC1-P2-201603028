@@ -114,11 +114,11 @@ class Ambito {
     }
 
     addFuncion(_s, _funcion) {
-        this.tablaFunciones.set(_s.toLowerCase(), _funcion)
+        this.tablaFunciones.set(_s.toLowerCase(), _funcion)        
         let nTabla = new TablaSimbolos(
             _funcion.id,
             _funcion.tipoSimbolo,
-            "FUNCION",
+            _funcion.tipo,
             getEntornoString(this),
             _funcion.linea,
             _funcion.columna

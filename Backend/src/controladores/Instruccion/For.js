@@ -24,6 +24,12 @@ function For(_instruccion, _ambito){
             if(ejecutar.cBreak){
                 return mensaje
             }
+            if(ejecutar.cContinue){
+                operacion = Operacion(_instruccion.expresion, _ambito)
+            }
+            if(ejecutar.cReturn){
+                operacion = Operacion(_instruccion.expresion, _ambito)
+            }
             if(_instruccion.actualizacion.tipo == 'INCREMENTO'){
                 inc = Incremento(_instruccion.actualizacion, _ambito)
             }else if(_instruccion.actualizacion.tipo == 'DECREMENTO'){

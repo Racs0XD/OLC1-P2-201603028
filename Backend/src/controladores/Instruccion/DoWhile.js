@@ -15,6 +15,13 @@ function DoWhile(_instruccion, _ambito){
         if(ejecutar.cBreak){
             return mensaje
         }
+        if(ejecutar.cContinue){
+            operacion = Operacion(_instruccion.expresion, _ambito)
+        }
+        if(ejecutar.cReturn){
+            operacion = Operacion(_instruccion.expresion, _ambito)
+        }
+
         operacion = Operacion(_instruccion.expresion, _ambito)
 
         while(operacion.valor){
@@ -22,6 +29,12 @@ function DoWhile(_instruccion, _ambito){
             mensaje+=ejecutar.cadena
             if(ejecutar.cBreak){
                 return mensaje
+            }
+            if(ejecutar.cContinue){
+                operacion = Operacion(_instruccion.expresion, _ambito)
+            }
+            if(ejecutar.cReturn){
+                operacion = Operacion(_instruccion.expresion, _ambito)
             }
             operacion = Operacion(_instruccion.expresion, _ambito)            
         }
