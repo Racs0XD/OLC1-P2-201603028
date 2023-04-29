@@ -152,12 +152,11 @@ const Instruccion = {
             linea: _linea,
             columna: _columna
         }
-    }, nuevoUpdateLista: function (_id, _expresion, _nuevovalor, _linea, _columna) {
+    }, nuevoAccesoLista: function (_id, _expresion, _linea, _columna) {
         return {
-            tipo: TIPO_INSTRUCCION.SET_LISTA,
+            tipo: TIPO_INSTRUCCION.GET_LISTA,
             id: _id,
             expresion: _expresion,
-            valor: _nuevovalor,
             linea: _linea,
             columna: _columna
         }
@@ -166,6 +165,14 @@ const Instruccion = {
             tipo: TIPO_INSTRUCCION.CHARARRAY,
             tipov: _tipo,
             id: _id,
+            expresion: _expresion,
+            linea: _linea,
+            columna: _columna
+        }
+    }, nuevoCasteo: function (_tipo, _expresion, _linea, _columna) {
+        return {
+            tipo: TIPO_INSTRUCCION.CASTEO,
+            tipoc: _tipo,
             expresion: _expresion,
             linea: _linea,
             columna: _columna

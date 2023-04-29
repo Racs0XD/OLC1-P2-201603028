@@ -756,7 +756,7 @@ function diferente(_opIzq, _opDer, _ambito) {
     }
 }
 
-function menor(_opIzq, _opDer, _ambito) {
+function menor(_opIzq, _opDer, _ambito) {    
     const opIzq = OperacionesVarias(_opIzq, _ambito)
     const opDer = OperacionesVarias(_opDer, _ambito)
     if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||

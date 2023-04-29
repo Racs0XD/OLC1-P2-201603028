@@ -91,6 +91,7 @@ function tolower(_opIzq, _opDer, _ambito) {
 }
 
 function length(_opIzq, _opDer, _ambito) {
+    console.log(_opDer)
     const opIzq = Cadenas(_opIzq, _ambito)
     const opDer = Cadenas(_opDer, _ambito)
     const tipoRes = TipoResultado(opIzq.tipo, opDer.tipo)

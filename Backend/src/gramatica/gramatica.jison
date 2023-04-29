@@ -38,7 +38,7 @@
 "default"               return 'Rdefault'
 "void"                  return 'Rvoid'
 "new"                   return 'Rnew'
-"append"                return 'Rappend'
+"add"                   return 'Radd'
 "setvalue"              return 'Rsetvalue'
 "print"                 return 'Rprint'
 "true"                  return 'Rtrue'
@@ -95,6 +95,7 @@
 
 
 /* operator associations and precedence */
+
 %left 'or'
 %left 'and'
 %right 'not'
@@ -110,7 +111,7 @@
 %% /* language grammar */
 
 INICIO:  OPCIONESCUERPO EOF {respuesta.err = ""; respuesta.LIns = $1; return respuesta;}
-    | error ptcoma         { respuesta.err  =  "Error Sintactico: "+ $$ + " Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }|
+    //| error ptcoma         { respuesta.err  =  "Error Sintactico: "+ $$ + " Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }|
 ;
 
 
@@ -122,13 +123,13 @@ CUERPO: DEC_VAR ptcoma {$$=$1;}                                           //DECL
         |METODOS {$$=$1;}
         |FUNCIONES {$$=$1;}
         |MAIN {$$=$1;}
-        |DEC_VEC {$$=$1}
-        |AS_VEC {$$=$1}
+        |DEC_VECTOR {$$=$1}
+        |ASIG_VECTOR {$$=$1}
         |DEC_LISTA {$$=$1}
         |ADD_LISTA {$$=$1}
-        |UPD_LISTA {$$=$1}
+        |ACCEDER_LISTA {$$=$1}
         |CHARARRAY {$$=$1}
-        | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
+        //| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
 ;
 
 METODOS: Rvoid identificador parA parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoMetodo($2, null, $6, this._$.first_line,this._$.first_column+1)}
@@ -189,12 +190,13 @@ INSTRUCCION: LLAMADAFUNCION {$$=$1}
         |DEC_VAR ptcoma {$$=$1}
         |ASIG_VAR ptcoma {$$=$1;}
         |PRINT {$$=$1;}
-        |DEC_VEC {$$=$1}
-        |AS_VEC {$$=$1}
+        |DEC_VECTOR {$$=$1}
+        |ASIG_VECTOR {$$=$1}
         |DEC_LISTA {$$=$1}
         |ADD_LISTA {$$=$1}
-        |UPD_LISTA {$$=$1}
+        |ACCEDER_LISTA {$$=$1}
         |CHARARRAY {$$=$1}
+        |CASTEO {$$=$1}
         |IF {$$=$1}
         |SWITCH {$$=$1}        
         |WHILE {$$=$1}
@@ -204,26 +206,26 @@ INSTRUCCION: LLAMADAFUNCION {$$=$1}
         |CONTINUE {$$=$1}
         |RETURN {$$=$1}
         |INSTRUCCIONFOR ptcoma {$$=$1}
-        | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
+        //| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
 ;
 
 PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}
 ;
 
-DEC_VEC: TIPO identificador corA corC igual Rnew TIPO corA EXPRESION corC ptcoma {$$ = INSTRUCCION.nuevaDeclaracionVector($1,$2,$7,$9,this._$.first_line,this._$.first_column+1)}
-      | TIPO identificador corA corC igual llaveA LISTAVALORES llaveC ptcoma {$$ = INSTRUCCION.nuevaDeclaracionVector($1,$2,null,$7,this._$.first_line,this._$.first_column+1)}
+DEC_VECTOR: TIPO corA corC identificador igual Rnew TIPO corA EXPRESION corC ptcoma {$$ = INSTRUCCION.nuevaDeclaracionVector($1,$4,$7,$9,this._$.first_line,this._$.first_column+1)}
+      | TIPO corA corC identificador igual llaveA LISTAVALORES llaveC ptcoma {$$ = INSTRUCCION.nuevaDeclaracionVector($1,$4,null,$7,this._$.first_line,this._$.first_column+1)}
 ;
 
-AS_VEC: identificador corA EXPRESION corC igual EXPRESION ptcoma {$$ = INSTRUCCION.nuevaAsignacionVector($1, $3, $6, this._$.first_line,this._$.first_column+1)}
+ASIG_VECTOR: identificador corA EXPRESION corC igual EXPRESION ptcoma {$$ = INSTRUCCION.nuevaAsignacionVector($1, $3, $6, this._$.first_line,this._$.first_column+1)}
 ;
 
 DEC_LISTA: Rlist menor TIPO mayor identificador igual Rnew Rlist menor TIPO mayor ptcoma{$$ = INSTRUCCION.nuevaDeclaracionLista($3,$5,$10,this._$.first_line,this._$.first_column+1)}
 ;
 
-ADD_LISTA: Rappend parA identificador coma EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevaAsignacionLista($3, $5, this._$.first_line,this._$.first_column+1)}
+ADD_LISTA: identificador punto Radd parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevaAsignacionLista($1, $5, this._$.first_line,this._$.first_column+1)}
 ;
 
-UPD_LISTA: Rsetvalue parA identificador coma EXPRESION coma EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoUpdateLista($3, $5, $7, this._$.first_line,this._$.first_column+1)}
+ACCEDER_LISTA: identificador corA corA EXPRESION corC corC {$$ = INSTRUCCION.nuevoAccesoLista($1, $4, this._$.first_line,this._$.first_column+1)}
 ;
 
 CHARARRAY: Rlist menor TIPO mayor identificador igual Rtochararray parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoCharArray($3, $5, $9, this._$.first_line,this._$.first_column+1)}
@@ -291,6 +293,16 @@ RETURN: Rreturn ptcoma {$$ = new INSTRUCCION.nuevoReturn(this._$.first_line,this
         | Rreturn EXPRESION ptcoma {$$ = new INSTRUCCION.nuevoReturn($2,this._$.first_line,this._$.first_column+1)}
 ;
 
+
+CASTEO: parA TIPO parC VAL_CAST {$$= INSTRUCCION.nuevoCasteo($2,$4,this._$.first_line, this._$.first_column+1);}
+;
+
+VAL_CAST: decimal {$$= INSTRUCCION.nuevoValor(Number($1),TIPO_VALOR.DECIMAL,this._$.first_line, this._$.first_column+1);}
+         | entero {$$= INSTRUCCION.nuevoValor(Number($1),TIPO_VALOR.ENTERO,this._$.first_line, this._$.first_column+1);}
+         | string {$$= INSTRUCCION.nuevoValor($1,TIPO_VALOR.CADENA,this._$.first_line, this._$.first_column+1);}
+         | char {$$= INSTRUCCION.nuevoValor($1,TIPO_VALOR.CHAR,this._$.first_line, this._$.first_column+1);}
+;
+
 EXPRESION: EXPRESION suma EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION menos EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line, this._$.first_column+1);}
          | EXPRESION multi EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.MULTIPLICACION,this._$.first_line, this._$.first_column+1);}
@@ -323,6 +335,9 @@ EXPRESION: EXPRESION suma EXPRESION {$$= INSTRUCCION.nuevaOperacionBinaria($1,$3
          | Rtostring parA EXPRESION parC {$$= INSTRUCCION.nuevaOperacionBinaria($3,$3, TIPO_OPERACION.TOSTRING,this._$.first_line,this._$.first_column+1);}
          | identificador corA EXPRESION corC {$$ = INSTRUCCION.nuevoValorVector($1,$3, TIPO_VALOR.VECTOR, this._$.first_line,this._$.first_column+1)}
          | Rgetvalue parA identificador coma EXPRESION parC {$$ = INSTRUCCION.nuevoValorLista($3,$5, TIPO_VALOR.LISTA, this._$.first_line,this._$.first_column+1)}
-         | identificador{$$= INSTRUCCION.nuevoValor($1,TIPO_VALOR.IDENTIFICADOR,this._$.first_line, this._$.first_column+1);}
+         | identificador {$$= INSTRUCCION.nuevoValor($1,TIPO_VALOR.IDENTIFICADOR,this._$.first_line, this._$.first_column+1);}
          | LLAMADAFUNCION {$$=$1}
+         | ACCEDER_LISTA {$$=$1}    
+         | CASTEO {$$=$1}
 ;
+

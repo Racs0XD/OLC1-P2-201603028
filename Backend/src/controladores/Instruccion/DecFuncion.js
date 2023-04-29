@@ -3,12 +3,14 @@ const Declaracion = require("./Declaracion");
 const Asignacion = require("./Asignacion");
 
 function DecFuncion(_instruccion, _ambito){
-   
-    if(_instruccion.lista_parametros[0].tipo == 'INST_DECLARACION'){
-        Declaracion(_instruccion.lista_parametros[0], _ambito)
-    }else if(_instruccion.lista_parametros[0].tipo == 'ASIGNACION'){
-        Asignacion(_instruccion.lista_parametros[0], _ambito)
-    }  
+    if(_instruccion.lista_parametros != null){
+        if(_instruccion.lista_parametros[0].tipo == 'INST_DECLARACION'){
+            Declaracion(_instruccion.lista_parametros[0], _ambito)
+        }else if(_instruccion.lista_parametros[0].tipo == 'ASIGNACION'){
+            Asignacion(_instruccion.lista_parametros[0], _ambito)
+        } 
+    }
+     
     const nuevaFuncion = new Funcion(_instruccion.tipof ,_instruccion.nombre, _instruccion.tipo, _instruccion.lista_parametros, _instruccion.instrucciones, _instruccion.linea, _instruccion.columna)
     if(_ambito.existeSimbolo(nuevaFuncion.id)!=false){
         return `Error: No se puede declarar un metodo con el mismo nombre \n de una variable '${nuevaFuncion.id}'... Linea: ${nuevaFuncion.linea} Columna: ${nuevaFuncion.columna}`
