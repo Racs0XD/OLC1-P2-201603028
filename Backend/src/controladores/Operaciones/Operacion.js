@@ -1,9 +1,7 @@
 const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion");
 const TIPO_OPERACION = require("../Enums/TipoOperacion");
 const TIPO_VALOR = require("../Enums/TipoValor");
-const Aritmetica = require("./Aritmetica");
-const Logica = require("./OpLogica");
-const Relacional = require("./Relacional");
+const OperacionesVarias = require("./Aritmetica_Logica_Relacional");
 const Ternario = require("./Ternario");
 const Cadenas = require("./Cadenas");
 const ValorExpresion = require("./ValorExpresion");
@@ -30,21 +28,19 @@ function Operacion(_expresion, _ambito) {
         _expresion.tipo === TIPO_OPERACION.POTENCIA ||
         _expresion.tipo === TIPO_OPERACION.MODULO ||
         _expresion.tipo === TIPO_OPERACION.UNARIA ||
-        _expresion.tipo === TIPO_OPERACION.NEGACION) {
-        return Aritmetica(_expresion, _ambito);
-    } else if (_expresion.tipo === TIPO_OPERACION.IGUALIGUAL ||
+        _expresion.tipo === TIPO_OPERACION.NEGACION||
+        _expresion.tipo === TIPO_OPERACION.OR ||
+        _expresion.tipo === TIPO_OPERACION.AND ||
+        _expresion.tipo === TIPO_OPERACION.NOT ||
+        _expresion.tipo === TIPO_OPERACION.IGUALIGUAL ||
         _expresion.tipo === TIPO_OPERACION.DIFERENTE ||
         _expresion.tipo === TIPO_OPERACION.MENOR ||
         _expresion.tipo === TIPO_OPERACION.MENORIGUAL ||
         _expresion.tipo === TIPO_OPERACION.MAYOR ||
         _expresion.tipo === TIPO_OPERACION.MAYORIGUAL) {
-        return Relacional(_expresion, _ambito);
+        return OperacionesVarias(_expresion, _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.TERNARIO) {
         return Ternario(_expresion, _ambito, _Error, _entorno, Simbol)
-    } else if (_expresion.tipo === TIPO_OPERACION.OR ||
-        _expresion.tipo === TIPO_OPERACION.AND ||
-        _expresion.tipo === TIPO_OPERACION.NOT) {
-        return Logica(_expresion, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.TOUPPER ||
         _expresion.tipo === TIPO_OPERACION.TOLOWER ||
         _expresion.tipo === TIPO_OPERACION.LENGTH ||

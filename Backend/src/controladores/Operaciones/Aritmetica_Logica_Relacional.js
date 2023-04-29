@@ -7,8 +7,7 @@ const ValorExpresion = require("./ValorExpresion")
 const Cadenas = require("./Cadenas");
 
 
-
-function Aritmetica(_expresion, _ambito) {
+function OperacionesVarias(_expresion, _ambito) {    
     if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
         const EjecutarFuncion = require("../Instruccion/EjecutarFuncion");;
         var mensaje = EjecutarFuncion(_expresion, _ambito)
@@ -33,6 +32,8 @@ function Aritmetica(_expresion, _ambito) {
         _expresion.tipo === TIPO_VALOR.CADENA || 
         _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || 
         _expresion.tipo === TIPO_VALOR.CHAR || 
+        _expresion.tipo === TIPO_VALOR.VECTOR ||
+        _expresion.tipo === TIPO_VALOR.LISTA ||
         _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
       return ValorExpresion(_expresion, _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.TOUPPER ||
@@ -43,34 +44,52 @@ function Aritmetica(_expresion, _ambito) {
         _expresion.tipo === TIPO_OPERACION.TYPEOF ||
         _expresion.tipo === TIPO_OPERACION.TOSTRING) {
         return Cadenas(_expresion, _ambito)
-    } else if (_expresion.tipo === TIPO_OPERACION.SUMA) {
-      return suma(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+    }  else if (_expresion.tipo === TIPO_OPERACION.SUMA) {        
+      return suma(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.RESTA) {
-      return resta(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return resta(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.MULTIPLICACION) {
-      return multiplicacion(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return multiplicacion(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.DIVISION) {
-      return division(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return division(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.POTENCIA) {
-      return potencia(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return potencia(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.MODULO) {
-      return modular(Aritmetica(_expresion.opIzq, _ambito), Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return modular(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.UNARIA) {
-      return menosUnario(Aritmetica(_expresion.opDer, _ambito), _ambito);
+      return menosUnario(OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.OR) {
+        return or(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.AND) {
+        return and(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.NOT) {
+        return not(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.TERNARIO) {
+        return ternario(_expresion.op1, _expresion.op2, _expresion.op3, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.TERNARIO) {
+        return Ternario(_expresion, _ambito, _Error, _entorno, Simbol)
+    } else if (_expresion.tipo === TIPO_OPERACION.IGUALIGUAL) {        
+        return igualigual(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.DIFERENTE) {
+        return diferente(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.MENOR) {
+        return menor(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.MENORIGUAL) {
+        return menorigual(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.MAYOR) {
+        return mayor(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.MAYORIGUAL) {
+        return mayorigual(_expresion.opIzq, _expresion.opDer, _ambito)
     }
   }
   
 
 
 function suma(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)
-    if(opDer === undefined){
-        opDer = _opDer; 
-    }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
-    } 
+   
+    var opIzq = _opizq
+    var opDer = _opDer
+   
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
@@ -171,8 +190,8 @@ function suma(_opizq, _opDer, _ambito) {
 }
 
 function resta(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)   
+    var opIzq = OperacionesVarias(_opizq, _ambito)
+    var opDer = OperacionesVarias(_opDer, _ambito)   
     if(opDer === undefined){
         opDer = _opDer; 
     }
@@ -277,8 +296,8 @@ function resta(_opizq, _opDer, _ambito) {
 }
 
 function multiplicacion(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)   
+    var opIzq = OperacionesVarias(_opizq, _ambito)
+    var opDer = OperacionesVarias(_opDer, _ambito)   
     if(opDer === undefined){
         opDer = _opDer; 
     }
@@ -367,8 +386,8 @@ function multiplicacion(_opizq, _opDer, _ambito) {
 }
 
 function division(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito);
-    var opDer = Aritmetica(_opDer, _ambito);
+    var opIzq = OperacionesVarias(_opizq, _ambito);
+    var opDer = OperacionesVarias(_opDer, _ambito);
     
     if(opDer === undefined){
         opDer = _opDer; 
@@ -425,8 +444,8 @@ function division(_opizq, _opDer, _ambito) {
 }
 
 function potencia(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)   
+    var opIzq = OperacionesVarias(_opizq, _ambito)
+    var opDer = OperacionesVarias(_opDer, _ambito)   
     if(opDer === undefined){
         opDer = _opDer; 
     }
@@ -491,8 +510,8 @@ function potencia(_opizq, _opDer, _ambito) {
 }
 
 function modular(_opizq, _opDer, _ambito) {
-    var opIzq = Aritmetica(_opizq, _ambito)
-    var opDer = Aritmetica(_opDer, _ambito)   
+    var opIzq = OperacionesVarias(_opizq, _ambito)
+    var opDer = OperacionesVarias(_opDer, _ambito)   
     if(opDer === undefined){
         opDer = _opDer; 
     }
@@ -557,7 +576,7 @@ function modular(_opizq, _opDer, _ambito) {
 }
 
 function menosUnario(_opDer, _ambito) {
-    var opDer = Aritmetica(_opDer, _ambito)
+    var opDer = OperacionesVarias(_opDer, _ambito)
     if(opDer === undefined){
         opDer = _opDer; 
     }
@@ -581,4 +600,260 @@ function menosUnario(_opDer, _ambito) {
 }
 
 
-module.exports = Aritmetica;
+function or(_opIzq, _opDer, _ambito) {    
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if (opIzq.tipo == opDer.tipo && opIzq.tipo === TIPO_DATO.BOOL) {
+        var resultado = false
+        if (opIzq.valor || opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+    var respuesta = (opIzq.tipo === null ? opIzq.valor : "") + (opDer.tipo === null ? opDer.valor : "")
+    return {
+        valor: respuesta + `\nError semántico: no se puede comparar el valor de tipo ${opIzq.tipo} \ncon el valor de tipo ${opDer.tipo}... Linea: +${_opIzq.linea}+" Columna: "+${_opIzq.columna}`,
+        tipo: null,
+        linea: _opIzq.linea,
+        columna: _opIzq.columna
+    }
+}
+function and(_opIzq, _opDer, _ambito) {
+   
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if (opIzq.tipo == opDer.tipo && opIzq.tipo === TIPO_DATO.BOOL) {
+        var resultado = false
+        if (opIzq.valor && opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+    var respuesta = (opIzq.tipo === null ? opIzq.valor : "") + (opDer.tipo === null ? opDer.valor : "")
+    return {
+        valor: respuesta + `\nError semántico: no se puede comparar el valor de tipo ${opIzq.tipo} \ncon el valor de tipo ${opDer.tipo}... Linea: +${_opIzq.linea}+" Columna: "+${_opIzq.columna}`,
+        tipo: null,
+        linea: _opIzq.linea,
+        columna: _opIzq.columna
+    }
+}
+
+function not(_opIzq, _opDer, _ambito) {
+   
+    const opIzq = OperacionesVarias(_opDer, _ambito)
+    
+    if (opIzq.tipo == "BOLEANO") {        
+        var resultado = !opIzq.valor
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opDer.linea,
+            columna: _opDer.columna
+        }
+    }
+    var respuesta = (opIzq.tipo === null ? opIzq.valor : "")
+    return {
+        valor: respuesta + `\nError semántico: no se puede negar el valor de tipo ${opIzq.tipo}`,
+        tipo: null,
+        linea: _opDer.linea,
+        columna: _opDer.columna
+    }
+}
+
+function ternario(_op1, _op2, _op3, _ambito) {
+    const op1 = OperacionesVarias(_op1, _ambito)
+    const op2 = Operacion(_op2, _ambito)
+    const op3 = Operacion(_op3, _ambito)
+    if (op1.tipo == "BOOL") {
+        if (op1.valor == true) {
+            return {
+                valor: op2.valor,
+                tipo: op2.tipo,
+                linea: op2.linea,
+                columna: op2.columna
+            }
+        } else {
+            return {
+                valor: op3.valor,
+                tipo: op3.tipo,
+                linea: op3.linea,
+                columna: op3.columna
+            }
+
+        }
+
+    }
+    var respuesta = (op1.tipo === null ? op1.valor : "")
+    return {
+        valor: respuesta + `\nError semántico: no se puede realizar la operacion ternaria del valor de tipo ${op1.tipo}`,
+        tipo: null,
+        linea: op1.linea,
+        columna: op1.columna
+    }
+}
+
+function igualigual(_opIzq, _opDer, _ambito) {    
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)||
+        (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL)||
+        (opIzq.tipo == TIPO_DATO.CADENA && opDer.tipo == TIPO_DATO.CADENA)) {
+        var resultado = false
+        if (opIzq.valor == opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+function diferente(_opIzq, _opDer, _ambito) {
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)
+        (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL)||
+        (opIzq.tipo == TIPO_DATO.CADENA && opDer.tipo == TIPO_DATO.CADENA)) {
+        var resultado = true
+        if (opIzq.valor == opDer.valor) {
+            resultado = false
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+function menor(_opIzq, _opDer, _ambito) {
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)) {
+        var resultado = false
+        if (opIzq.valor < opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+function menorigual(_opIzq, _opDer, _ambito) {
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)) {
+        var resultado = false
+        if (opIzq.valor <= opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+function mayor(_opIzq, _opDer, _ambito) {
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)) {
+        var resultado = false
+        if (opIzq.valor > opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+function mayorigual(_opIzq, _opDer, _ambito) {
+    const opIzq = OperacionesVarias(_opIzq, _ambito)
+    const opDer = OperacionesVarias(_opDer, _ambito)
+    if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)) {
+        var resultado = false
+        if (opIzq.valor >= opDer.valor) {
+            resultado = true
+        }
+        return {
+            valor: resultado,
+            tipo: TIPO_DATO.BOOL,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
+        }
+    }
+}
+
+module.exports = OperacionesVarias;

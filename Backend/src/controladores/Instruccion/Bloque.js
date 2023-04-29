@@ -118,6 +118,8 @@ function Bloque(_instrucciones,_ambito){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.IFE){
+            //console.log(instruccion)
+            //console.log("=====================================")
             var ejecutar = SentenciaIfElse(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
