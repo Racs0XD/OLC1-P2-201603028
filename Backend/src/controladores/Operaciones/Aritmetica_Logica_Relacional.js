@@ -87,7 +87,6 @@ function suma(_opizq, _opDer, _ambito) {
 
     var opIzq = _opizq
     var opDer = _opDer
-    //console.log(_opDer)
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {

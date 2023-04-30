@@ -29,7 +29,7 @@ function EjecutarFuncion(_instruccion, _ambito) {
     }
 
     var nuevoAmbito = new Ambito(_ambito)
-    
+    var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
     if (ejecutar.lista_parametros != null) {
 
         
@@ -41,7 +41,7 @@ function EjecutarFuncion(_instruccion, _ambito) {
                 var declaracionAsignacion = Instruccion.nuevaDeclaracion(ejecutar.lista_parametros[i].id, _instruccion.lista_valores[i], ejecutar.lista_parametros[i].tipo_dato, _instruccion.linea, _instruccion.columna)
                 //console.log(declaracionAsignacion)
                 var mensaje = DecParametro(declaracionAsignacion, nuevoAmbito)
-                //console.log(mensaje)
+                
                 if (mensaje != null) {
                     error = true
                     cadena += mensaje + '\n'
@@ -56,6 +56,8 @@ function EjecutarFuncion(_instruccion, _ambito) {
             var ejecuta = Bloque(ejecutar.instrucciones, nuevoAmbito)
             //console.log(ejecuta)
             var mensaje = ejecuta.cadena
+            
+
             for (let i = 0; i < ejecutar.instrucciones.length; i++) {
                 if (ejecutar.instrucciones[i].instrucciones != undefined) {
 
@@ -65,9 +67,8 @@ function EjecutarFuncion(_instruccion, _ambito) {
                 } else if (ejecutar.instrucciones[i].tipo == 'RETURN') {
 
                     if (ejecutar.instrucciones[i].retorno.tipo == TIPO_VALOR.IDENTIFICADOR) {
-                        mensaje = Operacion(ejecutar.instrucciones[i].retorno, nuevoAmbito)
+                        return Operacion(ejecutar.instrucciones[i].retorno, nuevoAmbito)
                     } else {
-                        var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
                         //console.log(Operacion(_instruccion.lista_valores[0], nuevoAmbito))
                         //console.log(ejecutar.instrucciones)
                         //console.log((Bloque(ejecutar.instrucciones, nuevoAmbito)))
@@ -85,26 +86,23 @@ function EjecutarFuncion(_instruccion, _ambito) {
 
             }
 
-
-
-
-
-
-
-            //console.log(ejecuta)
-            //console.log(Operacion(ejecutar.instrucciones[0], nuevoAmbito))    
-
-
             if (ejecuta.hayBreak) {
                 mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
             }
-            //console.log(mensaje)
-            return mensaje
+
+            
+            var val1 = Bloque(ejecutar.instrucciones, nuevoAmbito)
+            return {
+                valor: val1.cadena,
+                tipo: val.tipo,
+                linea: val.linea,
+                columna: val.columna,
+            }
+            
         } else {
             return `Error: Faltan valores para el metodo ${_instruccion.nombre}... Linea: ${_instruccion.linea} Columna: ${_instruccion.columna}`
         }
     } else {
-        //console.log(ejecutar)
         var ejecuta = Bloque(ejecutar.instrucciones, nuevoAmbito)
         var mensaje = ejecuta.cadena
 
