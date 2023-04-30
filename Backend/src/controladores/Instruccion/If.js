@@ -2,13 +2,14 @@ const Ambito = require("../Ambito/Ambito");
 const TIPO_DATO = require("../Enums/TipoDato");
 const Operacion = require("../Operaciones/Operacion");
 
-function SentenciaIf(_instruccion, _ambito){
+function SentenciaIf(_instruccion, _ambito){    
     var mensaje = ""
-    var operacion = Operacion(_instruccion.expresion, _ambito);
+    var operacion = Operacion(_instruccion.expresion, _ambito);    
     var cBreak=false  
     var cContinue=false 
     var cReturn=false 
     if(operacion.tipo === TIPO_DATO.BOOL){
+        //console.log(_instruccion)
         if(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)
             const Bloque = require("./Bloque");
@@ -16,8 +17,9 @@ function SentenciaIf(_instruccion, _ambito){
             cBreak= ejecutar.cBreak;
             cContinue = ejecutar.cContinue
             cReturn= ejecutar.cReturn;
-            mensaje+=ejecutar.cadena               
-        }              
+            mensaje+=ejecutar.cadena    
+                     
+        }     
         return {
             cBreak: cBreak,
             cContinue: cContinue,

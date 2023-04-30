@@ -100,7 +100,7 @@ const Instruccion = {
             linea: _linea,
             columna: _columna
         }
-    }, nuevaDeclaracionVector: function (_tipo, _id, _tipo2, _valor, _linea, _columna) {
+    }, nuevaDeclaracionVector: function (_tipo, _id, _tipo2, _valor, _linea, _columna) {      
         return {
             tipo: TIPO_INSTRUCCION.DEC_VECTOR,
             tipov: _tipo,
@@ -128,6 +128,7 @@ const Instruccion = {
             columna: _columna
         }
     }, nuevoValorLista: function (_valor, _indice, _tipo, _linea, _columna) {
+        
         return {
             valor: _valor,
             indice: _indice,
@@ -136,6 +137,7 @@ const Instruccion = {
             columna: _columna
         }
     }, nuevaDeclaracionLista: function (_tipo, _id, _tipo2, _linea, _columna) {
+       
         return {
             tipo: TIPO_INSTRUCCION.DEC_LISTA,
             tipov: _tipo,
@@ -154,7 +156,7 @@ const Instruccion = {
         }
     }, nuevoAccesoLista: function (_id, _expresion, _linea, _columna) {
         return {
-            tipo: TIPO_INSTRUCCION.GET_LISTA,
+            tipo: TIPO_INSTRUCCION.VAL_LISTA,
             id: _id,
             expresion: _expresion,
             linea: _linea,

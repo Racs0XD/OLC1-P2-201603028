@@ -30,6 +30,9 @@ function Cadenas(_expresion, _ambito) {
         return typeoffuncion(_expresion.opIzq, _expresion.opDer, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.TOSTRING) {
         return tostringfuncion(_expresion.opIzq, _expresion.opDer, _ambito)
+    } else if (_expresion.tipo === TIPO_OPERACION.CASTEO) {
+        return casteo(_expresion.expresion, _expresion.tipoc, _ambito);
+
     }
 }
 
@@ -91,7 +94,7 @@ function tolower(_opIzq, _opDer, _ambito) {
 }
 
 function length(_opIzq, _opDer, _ambito) {
-    console.log(_opDer)
+    //console.log(_opDer)
     const opIzq = Cadenas(_opIzq, _ambito)
     const opDer = Cadenas(_opDer, _ambito)
     const tipoRes = TipoResultado(opIzq.tipo, opDer.tipo)
@@ -190,8 +193,10 @@ function round(_opIzq, _opDer, _ambito) {
 }
 
 function typeoffuncion(_opIzq, _opDer, _ambito) {
+    
     const opIzq = Cadenas(_opIzq, _ambito)
     const opDer = Cadenas(_opDer, _ambito)
+    
     const tipoRes = TipoResultado(opIzq.tipo, opDer.tipo)
     if (tipoRes != null) {
         if (tipoRes == 'ENTERO') {
@@ -204,6 +209,13 @@ function typeoffuncion(_opIzq, _opDer, _ambito) {
             var resultado = "STRING";
         } else if (tipoRes == "CHAR") {
             var resultado = "CHAR";
+        }
+        
+        a =  {
+            valor: resultado,
+            tipo: TIPO_DATO.CADENA,
+            linea: _opIzq.linea,
+            columna: _opIzq.columna
         }
         return {
             valor: resultado,
@@ -221,6 +233,83 @@ function typeoffuncion(_opIzq, _opDer, _ambito) {
         columna: _opIzq.columna
     }
 }
+
+function casteo(expresion, tipoc, _ambito) {
+    
+    const valorExp = expresion;
+    const tipoExp = valorExp.tipo;    
+    
+    if (tipoc == 'DECIMAL' && tipoExp == TIPO_VALOR.ENTERO) {
+        
+      // Int a double
+      return {
+        valor: parseFloat(valorExp.valor),
+        tipo: TIPO_DATO.DECIMAL,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'ENTERO' && tipoExp == TIPO_VALOR.DECIMAL) {
+      // Double a Int
+      return {
+        valor: parseInt(valorExp.valor),
+        tipo: TIPO_DATO.ENTERO,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'CADENA' && tipoExp == TIPO_VALOR.ENTERO) {
+      // Int a String
+      return {
+        valor: valorExp.valor.toString(),
+        tipo: TIPO_DATO.CADENA,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'CHAR' && tipoExp == TIPO_VALOR.ENTERO) {
+      // Int a Char
+      const charValue = String.fromCharCode(parseInt(valorExp.valor));
+      return {
+        valor: charValue,
+        tipo: TIPO_DATO.CHAR,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'CADENA' && tipoExp == TIPO_VALOR.DECIMAL) {
+      // Double a String
+      return {
+        valor: valorExp.valor.toString(),
+        tipo: TIPO_DATO.CADENA,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'ENTERO' && tipoExp == TIPO_VALOR.CHAR) {
+      // Char a Int
+      const charCode = valorExp.valor.charCodeAt(0);
+      return {
+        valor: charCode,
+        tipo: TIPO_DATO.ENTERO,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else if (tipoc == 'DECIMAL' && tipoExp == TIPO_VALOR.CHAR) {
+      // Char a double
+      const charCode = valorExp.valor.charCodeAt(0);
+      return {
+        valor: parseFloat(charCode),
+        tipo: TIPO_DATO.DECIMAL,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    } else {
+      return {
+        valor: null,
+        tipo: null,
+        linea: expresion.linea,
+        columna: expresion.columna
+      };
+    }
+  }
+  
+  
 
 function tostringfuncion(_opIzq, _opDer, _ambito) {
     const opIzq = Cadenas(_opIzq, _ambito)

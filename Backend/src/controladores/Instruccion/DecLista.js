@@ -1,6 +1,5 @@
 const Simbolo = require("../Ambito/Simbolo");
 const TIPO_DATO = require("../Enums/TipoDato");
-const Operacion = require("../Operaciones/Operacion");
 
 function Declaracionlista(_instruccion, _ambito){
     if(_instruccion.tipov === TIPO_DATO.DECIMAL){

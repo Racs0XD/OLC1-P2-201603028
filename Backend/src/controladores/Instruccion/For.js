@@ -6,7 +6,8 @@ const Asignacion = require("./Asignacion");
 const Incremento = require("./Incremento");
 const Decremento = require("./Decremento");
 
-function For(_instruccion, _ambito){       
+function For(_instruccion, _ambito){     
+    
     var mensaje = ""
     if(_instruccion.expresion.tipo == 'INST_DECLARACION'){
         Declaracion(_instruccion.expresion, _ambito)
@@ -16,12 +17,15 @@ function For(_instruccion, _ambito){
     
     var operacion = Operacion(_instruccion.condicion, _ambito)   
     
-    if(operacion.tipo === TIPO_DATO.BOOL){        
+    if(operacion.tipo === TIPO_DATO.BOOL){ 
+             
         while(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)
             const Bloque = require('./Bloque')
             var ejecutar =Bloque(_instruccion.instrucciones, nuevoAmbito)
+            
             mensaje+=ejecutar.cadena
+            
             if(ejecutar.cBreak){
                 return mensaje
             }

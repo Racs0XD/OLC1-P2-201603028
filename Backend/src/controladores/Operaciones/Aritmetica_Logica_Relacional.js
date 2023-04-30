@@ -7,35 +7,39 @@ const ValorExpresion = require("./ValorExpresion")
 const Cadenas = require("./Cadenas");
 
 
-function OperacionesVarias(_expresion, _ambito) {    
-    if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
-        const EjecutarFuncion = require("../Instruccion/EjecutarFuncion");;
+function OperacionesVarias(_expresion, _ambito) {
+    //console.log(_expresion)
+    if (_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION) {
+
+        const EjecutarFuncion = require("../Instruccion/EjecutarFuncion")
         var mensaje = EjecutarFuncion(_expresion, _ambito)
-        if(mensaje!=null){
-            if(mensaje === ""){
+        //console.log(_expresion.lista_valores[0])
+        //console.log(mensaje)
+        if (mensaje != null) {
+            if (mensaje === "") {
                 mensaje = "vacío"
                 return {
-                    valor:mensaje,
-                    tipo:TIPO_DATO.CADENA
-                } 
+                    valor: mensaje,
+                    tipo: TIPO_DATO.CADENA
+                }
             } else {
                 return {
-                    valor:mensaje,
-                    tipo:TIPO_DATO.CADENA
-                } 
+                    valor: mensaje,
+                    tipo: TIPO_DATO.CADENA
+                }
             }
-              
+
         }
-    } else if (_expresion.tipo === TIPO_VALOR.DECIMAL || 
-        _expresion.tipo === TIPO_VALOR.BOOL || 
+    } else if (_expresion.tipo === TIPO_VALOR.DECIMAL ||
+        _expresion.tipo === TIPO_VALOR.BOOL ||
         _expresion.tipo === TIPO_VALOR.ENTERO ||
-        _expresion.tipo === TIPO_VALOR.CADENA || 
-        _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || 
-        _expresion.tipo === TIPO_VALOR.CHAR || 
+        _expresion.tipo === TIPO_VALOR.CADENA ||
+        _expresion.tipo === TIPO_VALOR.IDENTIFICADOR ||
+        _expresion.tipo === TIPO_VALOR.CHAR ||
         _expresion.tipo === TIPO_VALOR.VECTOR ||
         _expresion.tipo === TIPO_VALOR.LISTA ||
         _expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
-      return ValorExpresion(_expresion, _ambito);
+        return ValorExpresion(_expresion, _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.TOUPPER ||
         _expresion.tipo === TIPO_OPERACION.TOLOWER ||
         _expresion.tipo === TIPO_OPERACION.LENGTH ||
@@ -44,20 +48,20 @@ function OperacionesVarias(_expresion, _ambito) {
         _expresion.tipo === TIPO_OPERACION.TYPEOF ||
         _expresion.tipo === TIPO_OPERACION.TOSTRING) {
         return Cadenas(_expresion, _ambito)
-    }  else if (_expresion.tipo === TIPO_OPERACION.SUMA) {        
-      return suma(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.SUMA) {
+        return suma(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.RESTA) {
-      return resta(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+        return resta(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.MULTIPLICACION) {
-      return multiplicacion(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+        return multiplicacion(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.DIVISION) {
-      return division(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+        return division(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.POTENCIA) {
-      return potencia(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
-    } else if (_expresion.tipo === TIPO_OPERACION.MODULO) {
-      return modular(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+        return potencia(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+    } else if (_expresion.tipo === TIPO_OPERACION.MODULO) {        
+        return modular(OperacionesVarias(_expresion.opIzq, _ambito), OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.UNARIA) {
-      return menosUnario(OperacionesVarias(_expresion.opDer, _ambito), _ambito);
+        return menosUnario(OperacionesVarias(_expresion.opDer, _ambito), _ambito);
     } else if (_expresion.tipo === TIPO_OPERACION.OR) {
         return or(_expresion.opIzq, _expresion.opDer, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.AND) {
@@ -68,7 +72,7 @@ function OperacionesVarias(_expresion, _ambito) {
         return ternario(_expresion.op1, _expresion.op2, _expresion.op3, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.TERNARIO) {
         return Ternario(_expresion, _ambito, _Error, _entorno, Simbol)
-    } else if (_expresion.tipo === TIPO_OPERACION.IGUALIGUAL) {        
+    } else if (_expresion.tipo === TIPO_OPERACION.IGUALIGUAL) {
         return igualigual(_expresion.opIzq, _expresion.opDer, _ambito)
     } else if (_expresion.tipo === TIPO_OPERACION.DIFERENTE) {
         return diferente(_expresion.opIzq, _expresion.opDer, _ambito)
@@ -81,15 +85,15 @@ function OperacionesVarias(_expresion, _ambito) {
     } else if (_expresion.tipo === TIPO_OPERACION.MAYORIGUAL) {
         return mayorigual(_expresion.opIzq, _expresion.opDer, _ambito)
     }
-  }
-  
+}
+
 
 
 function suma(_opizq, _opDer, _ambito) {
-   
+
     var opIzq = _opizq
     var opDer = _opDer
-   
+    //console.log(_opDer)
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
@@ -190,13 +194,15 @@ function suma(_opizq, _opDer, _ambito) {
 }
 
 function resta(_opizq, _opDer, _ambito) {
+
     var opIzq = OperacionesVarias(_opizq, _ambito)
-    var opDer = OperacionesVarias(_opDer, _ambito)   
-    if(opDer === undefined){
-        opDer = _opDer; 
+    var opDer = OperacionesVarias(_opDer, _ambito)
+
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
+    if (opIzq === undefined) {
+        opIzq = _opizq;
     }
 
 
@@ -216,6 +222,7 @@ function resta(_opizq, _opDer, _ambito) {
                 if (opIzq.tipo === TIPO_DATO.BOOL) {
                     if (opIzq.valor === true) {
                         const resultado = 1 - Number(opDer.valor);
+
                         return {
                             valor: resultado,
                             tipo: tipores,
@@ -224,6 +231,7 @@ function resta(_opizq, _opDer, _ambito) {
 
                         }
                     } else {
+
                         const resultado = 0 - Number(opDer.valor);
                         return {
                             valor: resultado,
@@ -247,6 +255,7 @@ function resta(_opizq, _opDer, _ambito) {
                         }
                     } else {
                         const resultado = Number(opIzq.valor) - 0;
+                        
                         return {
                             valor: resultado,
                             tipo: tipores,
@@ -280,7 +289,7 @@ function resta(_opizq, _opDer, _ambito) {
                     }
                 }
             } else {
-                const resultado = Number(opIzq.valor) - Number(opDer.valor);
+                const resultado = Number(opIzq.valor) - Number(opDer.valor);                
                 return {
                     valor: resultado,
                     tipo: tipores,
@@ -297,12 +306,12 @@ function resta(_opizq, _opDer, _ambito) {
 
 function multiplicacion(_opizq, _opDer, _ambito) {
     var opIzq = OperacionesVarias(_opizq, _ambito)
-    var opDer = OperacionesVarias(_opDer, _ambito)   
-    if(opDer === undefined){
-        opDer = _opDer; 
+    var opDer = OperacionesVarias(_opDer, _ambito)
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
+    if (opIzq === undefined) {
+        opIzq = _opizq;
     }
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (opIzq.tipo === TIPO_DATO.CADENA || opDer.tipo === TIPO_DATO.CADENA) {
@@ -388,12 +397,12 @@ function multiplicacion(_opizq, _opDer, _ambito) {
 function division(_opizq, _opDer, _ambito) {
     var opIzq = OperacionesVarias(_opizq, _ambito);
     var opDer = OperacionesVarias(_opDer, _ambito);
-    
-    if(opDer === undefined){
-        opDer = _opDer; 
+
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
+    if (opIzq === undefined) {
+        opIzq = _opizq;
     }
 
 
@@ -445,12 +454,12 @@ function division(_opizq, _opDer, _ambito) {
 
 function potencia(_opizq, _opDer, _ambito) {
     var opIzq = OperacionesVarias(_opizq, _ambito)
-    var opDer = OperacionesVarias(_opDer, _ambito)   
-    if(opDer === undefined){
-        opDer = _opDer; 
+    var opDer = OperacionesVarias(_opDer, _ambito)
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
+    if (opIzq === undefined) {
+        opIzq = _opizq;
     }
 
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
@@ -511,12 +520,12 @@ function potencia(_opizq, _opDer, _ambito) {
 
 function modular(_opizq, _opDer, _ambito) {
     var opIzq = OperacionesVarias(_opizq, _ambito)
-    var opDer = OperacionesVarias(_opDer, _ambito)   
-    if(opDer === undefined){
-        opDer = _opDer; 
+    var opDer = OperacionesVarias(_opDer, _ambito)
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
-    if(opIzq === undefined){
-        opIzq = _opizq; 
+    if (opIzq === undefined) {
+        opIzq = _opizq;
     }
     const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
     if (tipores != null) {
@@ -577,8 +586,8 @@ function modular(_opizq, _opDer, _ambito) {
 
 function menosUnario(_opDer, _ambito) {
     var opDer = OperacionesVarias(_opDer, _ambito)
-    if(opDer === undefined){
-        opDer = _opDer; 
+    if (opDer === undefined) {
+        opDer = _opDer;
     }
     if (opDer.tipo === TIPO_DATO.DECIMAL || opDer.tipo === TIPO_DATO.ENTERO) {
         const resultado = opDer.valor * -1;
@@ -600,7 +609,7 @@ function menosUnario(_opDer, _ambito) {
 }
 
 
-function or(_opIzq, _opDer, _ambito) {    
+function or(_opIzq, _opDer, _ambito) {
     const opIzq = OperacionesVarias(_opIzq, _ambito)
     const opDer = OperacionesVarias(_opDer, _ambito)
     if (opIzq.tipo == opDer.tipo && opIzq.tipo === TIPO_DATO.BOOL) {
@@ -624,7 +633,7 @@ function or(_opIzq, _opDer, _ambito) {
     }
 }
 function and(_opIzq, _opDer, _ambito) {
-   
+
     const opIzq = OperacionesVarias(_opIzq, _ambito)
     const opDer = OperacionesVarias(_opDer, _ambito)
     if (opIzq.tipo == opDer.tipo && opIzq.tipo === TIPO_DATO.BOOL) {
@@ -649,10 +658,10 @@ function and(_opIzq, _opDer, _ambito) {
 }
 
 function not(_opIzq, _opDer, _ambito) {
-   
+
     const opIzq = OperacionesVarias(_opDer, _ambito)
-    
-    if (opIzq.tipo == "BOLEANO") {        
+
+    if (opIzq.tipo == "BOLEANO") {
         var resultado = !opIzq.valor
         return {
             valor: resultado,
@@ -702,7 +711,7 @@ function ternario(_op1, _op2, _op3, _ambito) {
     }
 }
 
-function igualigual(_opIzq, _opDer, _ambito) {    
+function igualigual(_opIzq, _opDer, _ambito) {
     const opIzq = OperacionesVarias(_opIzq, _ambito)
     const opDer = OperacionesVarias(_opDer, _ambito)
     if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||
@@ -713,8 +722,8 @@ function igualigual(_opIzq, _opDer, _ambito) {
         (opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL) ||
         (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
         (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
-        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)||
-        (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL)||
+        (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR) ||
+        (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL) ||
         (opIzq.tipo == TIPO_DATO.CADENA && opDer.tipo == TIPO_DATO.CADENA)) {
         var resultado = false
         if (opIzq.valor == opDer.valor) {
@@ -741,7 +750,7 @@ function diferente(_opIzq, _opDer, _ambito) {
         (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.ENTERO) ||
         (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.DECIMAL) ||
         (opIzq.tipo == TIPO_DATO.CHAR && opDer.tipo == TIPO_DATO.CHAR)
-        (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL)||
+            (opIzq.tipo == TIPO_DATO.BOOL && opDer.tipo == TIPO_DATO.BOOL) ||
         (opIzq.tipo == TIPO_DATO.CADENA && opDer.tipo == TIPO_DATO.CADENA)) {
         var resultado = true
         if (opIzq.valor == opDer.valor) {
@@ -756,7 +765,7 @@ function diferente(_opIzq, _opDer, _ambito) {
     }
 }
 
-function menor(_opIzq, _opDer, _ambito) {    
+function menor(_opIzq, _opDer, _ambito) {
     const opIzq = OperacionesVarias(_opIzq, _ambito)
     const opDer = OperacionesVarias(_opDer, _ambito)
     if ((opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO) ||

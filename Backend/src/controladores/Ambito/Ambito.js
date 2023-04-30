@@ -34,6 +34,7 @@ class Ambito {
     
     
     addSimbolo(_clave, _simbolo) {
+        
         this.tablaSimbolos.set(_clave.toLowerCase(), _simbolo);
         let nTabla = new TablaSimbolos(
             _simbolo.id,
@@ -114,6 +115,7 @@ class Ambito {
     }
 
     addFuncion(_s, _funcion) {
+        
         this.tablaFunciones.set(_s.toLowerCase(), _funcion)        
         let nTabla = new TablaSimbolos(
             _funcion.id,
@@ -127,9 +129,11 @@ class Ambito {
     }
 
     getFuncion(_s) { 
+        
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaFunciones.get(_s.toLowerCase())
-            if (encontrado != null) {
+            if (encontrado != null && encontrado != undefined) {
+                //console.log("encontrado: ", encontrado)
                 return encontrado
             }
         }

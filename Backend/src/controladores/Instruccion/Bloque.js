@@ -1,4 +1,5 @@
 const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion");
+const Return = require("./Return");
 const Print = require("./Print");
 const Asignacion = require("./Asignacion");
 const Declaracion = require("./Declaracion");
@@ -18,16 +19,14 @@ const Asignacionlista = require("./AsLista")
 const Actualizarlista = require("./ActualizarLista")
 const Chararrayfuncion = require("./CharArray")
 
-function Bloque(_instrucciones,_ambito){
-    // console.log("====================================")
-    //         console.log(_instrucciones)
-    //         console.log("====================================")
+function Bloque(_instrucciones,_ambito){ 
+    //console.log(_instrucciones) 
     var cadena=""
     var cBreak = false;
     var cContinue = false;
     var cReturn = false;
     _instrucciones.forEach(instruccion => {
-        
+     
         if(cBreak){
             return{
                 cBreak: cBreak,
@@ -74,6 +73,7 @@ function Bloque(_instrucciones,_ambito){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.DEC_VECTOR){
+            
             var mensaje = Declaracionvector(instruccion, _ambito)
             if(mensaje!=null){
                 cadena+=mensaje
@@ -109,6 +109,8 @@ function Bloque(_instrucciones,_ambito){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.IF){
+            //console.log(instruccion)
+            //console.log("=====================================")
             var ejecutar = SentenciaIf(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cContinue
@@ -118,8 +120,7 @@ function Bloque(_instrucciones,_ambito){
                 cadena+=mensaje
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.IFE){
-            //console.log(instruccion)
-            //console.log("=====================================")
+            
             var ejecutar = SentenciaIfElse(instruccion, _ambito)
             var mensaje = ejecutar.cadena
             cBreak = ejecutar.cBreak
@@ -194,6 +195,11 @@ function Bloque(_instrucciones,_ambito){
             }
         } else if(instruccion.tipo === TIPO_INSTRUCCION.RETURN){
             cReturn = true
+            var mensaje = Return(instruccion, _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje
+            }
+            
             return {
                 cReturn: cReturn,
                 cadena: cadena

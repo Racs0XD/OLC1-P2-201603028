@@ -1,6 +1,7 @@
 const TIPO_INSTRUCCION = require("../Enums/TipoInstruccion");
 const TIPO_OPERACION = require("../Enums/TipoOperacion");
 const TIPO_VALOR = require("../Enums/TipoValor");
+const TIPO_DATO = require("../Enums/TipoDato")
 const OperacionesVarias = require("./Aritmetica_Logica_Relacional");
 const Ternario = require("./Ternario");
 const Cadenas = require("./Cadenas");
@@ -10,7 +11,27 @@ const ValorExpresion = require("./ValorExpresion");
 
 function Operacion(_expresion, _ambito) {
     //console.log(_expresion)
-    if (_expresion.tipo === TIPO_VALOR.DECIMAL ||
+    if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION){
+        
+        const EjecutarFuncion = require("../Instruccion/EjecutarFuncion")
+        var mensaje = EjecutarFuncion(_expresion, _ambito)
+        //console.log(mensaje)
+        if(mensaje!=null){
+            if(mensaje === ""){
+                mensaje = "vacío"
+                return {
+                    valor:mensaje,
+                    tipo:TIPO_DATO.CADENA
+                } 
+            } else {
+                return {
+                    valor:mensaje,
+                    tipo:TIPO_DATO.CADENA
+                } 
+            }
+              
+        }
+    } else if (_expresion.tipo === TIPO_VALOR.DECIMAL ||
         _expresion.tipo === TIPO_VALOR.BOOL ||
         _expresion.tipo === TIPO_VALOR.ENTERO ||
         _expresion.tipo === TIPO_VALOR.CADENA ||

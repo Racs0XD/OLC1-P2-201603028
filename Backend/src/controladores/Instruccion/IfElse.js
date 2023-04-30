@@ -5,7 +5,7 @@ const Operacion = require("../Operaciones/Operacion");
 function SentenciaIfElse(_instruccion, _ambito){
     var mensaje = ""
     var operacion = Operacion(_instruccion.expresion, _ambito);
-    // console.log(operacion)
+    // console.log(_instruccion)
     // console.log("=====================================")
     var cBreak=false
     var cContinue=false 
