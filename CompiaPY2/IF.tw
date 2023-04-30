@@ -1,0 +1,21 @@
+int a = 1;
+int b = 2;
+int c = a+b;
+int d = a-b;
+int e = a*b;
+int x = 50;
+
+void Pure(){
+    if(a == 2){
+        print(c + " c");
+        print(d + " d");
+        print(e + " CADENA DENTRO DEL IF");
+    } else if (x <= 50 && x>0) {
+       print("CADENA DENTRO DEL ELSEIF");
+    } else {
+        print("CADENA DENTRO DEL ELSE");
+    }
+    print("hi");
+}
+
+main Pure();

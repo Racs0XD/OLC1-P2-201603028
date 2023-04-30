@@ -47,7 +47,7 @@ class Ambito {
         RTSimbolos.TabSimbolos.push(nTabla)
 
     }
-    getSimbolo(_clave) {  
+    getSimbolo(_clave) {
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaSimbolos.get(_clave.toLowerCase())
             if (encontrado != null) {

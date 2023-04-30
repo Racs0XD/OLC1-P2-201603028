@@ -7,8 +7,9 @@ const Operacion = require("../Operaciones/Operacion")
 
 
 function Return(_instruccion, _ambito) {
-    //console.log(_instruccion.retorno)
+    //console.log(_instruccion)
     if (_instruccion.retorno.valor === null || _instruccion.retorno.valor === undefined) {
+        //console.log(Operacion(_instruccion.retorno, _ambito))
         return Operacion(_instruccion.retorno, _ambito).valor
     } else {
         return _instruccion.retorno.valor

@@ -1,0 +1,19 @@
+
+list<string> frase = new list<string>;
+
+
+void imprimirLista(){
+string a = "a";
+String b = "Hola";
+String l = "Mundo";
+frase.add(a);
+frase.add(b);
+frase.add(l);
+    for (int i = 0; i < length(frase); i++) {
+        print(frase[[i]]);
+    }
+}
+
+
+
+main imprimirLista();

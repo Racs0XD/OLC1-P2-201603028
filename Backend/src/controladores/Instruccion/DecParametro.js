@@ -23,13 +23,13 @@ function DecParametro(_instruccion, _ambito){
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
     }
-    else if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){        
+    else if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){               
         var valor = 0
         if(_instruccion.valor != null){            
-            var op = Operacion(_instruccion.valor, _ambito)            
+            var op = Operacion(_instruccion.valor, _ambito) 
             tipo = op.tipo;
             if(tipo === TIPO_DATO.ENTERO){
-                valor = op.valor;
+                valor = op.valor;           
             } else if(tipo === TIPO_DATO.BOOL){
                 valor = op.valor;
                 if(valor == true){
@@ -42,8 +42,9 @@ function DecParametro(_instruccion, _ambito){
             } else {
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.ENTERO+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
-        }
-        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)        
+        }        
+        const nuevoSimbolo = new Simbolo(_instruccion.id, "DEC_VARIABLE", valor, TIPO_DATO.ENTERO, _instruccion.linea, _instruccion.columna)   
+             
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }

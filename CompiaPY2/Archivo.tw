@@ -1,0 +1,41 @@
+int a = 5;
+int b = 5;
+
+int c = a+b;
+
+int d = b+a;
+
+double e = 10.1;
+
+string a1 = "hol";
+char b1 = 'a';
+char b2= '3';
+char b3 = 'adss';
+boolean c1 = TRUE;
+boolean c2 = "TRUE";
+boolean c3 = false;
+boolean c4;
+c4 = true;
+
+
+
+
+void Prueba(){
+    print(a);
+    print(c + " si imprime c");
+    print(d);
+    print(f);
+    print(e);
+    print(a1);
+    print(b1);
+    print(b2);
+    print(b3);
+    print(c1);
+    print(c2);
+    print(c3);
+    c4 = false;
+    print(c4);
+    
+}
+
+main Prueba();

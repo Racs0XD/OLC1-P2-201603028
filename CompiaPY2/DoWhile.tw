@@ -1,0 +1,20 @@
+int a = 1;
+
+void P() {
+    do {
+        if (a == 2) {
+            print(a + " CADENA DENTRO DEL IF");
+            a = a + 1;
+BREAK;
+        } else if (a <= 4 && a > 0) {
+            print("CADENA DENTRO DEL ELSEIF");
+            a = a + 1;
+        } else {
+            print("CADENA DENTRO DEL ELSE");
+            a = a + 1;
+        }
+    } while (a <= 6);
+    print("fuera");
+}
+
+main P();

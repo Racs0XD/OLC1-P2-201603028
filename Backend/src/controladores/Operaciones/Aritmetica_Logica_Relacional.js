@@ -18,15 +18,9 @@ function OperacionesVarias(_expresion, _ambito) {
         if (mensaje != null) {
             if (mensaje === "") {
                 mensaje = "vacío"
-                return {
-                    valor: mensaje,
-                    tipo: TIPO_DATO.CADENA
-                }
+                return mensaje
             } else {
-                return {
-                    valor: mensaje,
-                    tipo: TIPO_DATO.CADENA
-                }
+                return mensaje
             }
 
         }

@@ -1,0 +1,33 @@
+void Principal(){
+    print("-----------Factorial Iterativo---------");
+    factorialIterativo(8);
+}
+
+int factorialIterativo(int n){
+   int a = 1;
+int b = 2;
+int c = a+b;
+int d = a-b;
+int e = a*b;
+
+    if(a == 2){
+        print(c + " c");
+        print(d + " d");
+        print(e + " CADENA DENTRO DEL IF");
+    } else if (n == 8) {
+       print("CADENA DENTRO DEL ELSEIF");
+    } else {
+        print("CADENA DENTRO DEL ELSE");
+    }
+return n;
+}
+
+main Principal();
+
+/*
+--------------------SALIDA ESPERADA-----------------
+-----------Factorial Iterativo---------
+8! = 40320
+-----------Factorial Recursivo---------
+8! = 40320
+*/

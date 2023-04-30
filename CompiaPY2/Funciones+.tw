@@ -1,0 +1,27 @@
+void Principal(){
+    print("-----------Factorial Recursivo---------");
+    print("8! = " + factorialRecursivo(8));
+}
+
+int factorialIterativo(int n){
+   int a = 1;
+int b = 2;
+int c = a+b;
+int d = a-b;
+int e = a*b;
+
+    if(a == 2){
+        print(c + " c");
+        print(d + " d");
+        print(e + " CADENA DENTRO DEL IF");
+    } else if (n == 8) {
+       print("CADENA DENTRO DEL ELSEIF");
+    } else {
+        print("CADENA DENTRO DEL ELSE");
+    }
+}
+
+main Principal();
+
+
+
