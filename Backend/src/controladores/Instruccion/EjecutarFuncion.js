@@ -29,7 +29,8 @@ function EjecutarFuncion(_instruccion, _ambito) {
     }
 
     var nuevoAmbito = new Ambito(_ambito)
-    var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
+
+    
     if (ejecutar.lista_parametros != null) {
 
         
@@ -72,7 +73,7 @@ function EjecutarFuncion(_instruccion, _ambito) {
                         //console.log(Operacion(_instruccion.lista_valores[0], nuevoAmbito))
                         //console.log(ejecutar.instrucciones)
                         //console.log((Bloque(ejecutar.instrucciones, nuevoAmbito)))
-
+                        var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
                         var val1 = Bloque(ejecutar.instrucciones, nuevoAmbito)
                         return {
                             valor: val1.cadena,
@@ -90,7 +91,7 @@ function EjecutarFuncion(_instruccion, _ambito) {
                 mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
             }
 
-            
+            var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
             var val1 = Bloque(ejecutar.instrucciones, nuevoAmbito)
             return {
                 valor: val1.cadena,
