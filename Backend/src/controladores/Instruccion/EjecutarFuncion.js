@@ -106,12 +106,25 @@ function EjecutarFuncion(_instruccion, _ambito) {
     } else {
         var ejecuta = Bloque(ejecutar.instrucciones, nuevoAmbito)
         var mensaje = ejecuta.cadena
-
         if (ejecuta.hayBreak) {
-            mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
+            return mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
+         }
+         
+        if(ejecutar.lista_parametros !== null){
+            var val = nuevoAmbito.getSimbolo(ejecutar.lista_parametros[0].id)
+            return {
+                valor: ejecuta.cadena,
+                tipo: val.tipo,
+                linea: val.linea,
+                columna: val.columna,
+            }
+        } else {
+            return mensaje
         }
+        
+        
 
-        return mensaje
+       
     }
 
 
