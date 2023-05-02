@@ -1,0 +1,26 @@
+digraph G {
+node [shape="box"]Nodo0[label="RAIZ"];
+Nodo1[label="DECLARACION"];
+Nodo0->Nodo1;
+Nodo2[label="TIPO
+ ENTERO"];
+Nodo1->Nodo2;
+Nodo3[label="ID
+ edad"];
+Nodo1->Nodo3;
+Nodo4[label="VAL_ENTERO
+ 18"];
+Nodo1->Nodo4;
+Nodo5[label="DEC_METODO"];
+Nodo0->Nodo5;
+Nodo6[label="METODO
+ prueba"];
+Nodo5->Nodo6;
+Nodo7[label="INSTRUCCIONES"];
+Nodo5->Nodo7;
+Nodo8[label="MAIN"];
+Nodo0->Nodo8;
+Nodo9[label="LLAMADA 
+ prueba"];
+Nodo8->Nodo9;
+}

@@ -10,7 +10,8 @@ import { Header, Icon, Menu, Segment, Button } from "semantic-ui-react";
 function Reportes(props) {
   const error = props.errores;
   const simbolos = props.simbolos;
-  const [tab, setTab] = useState(2); // Inicialmente mostrar la vista de Errores
+  const ast = props.ast;
+  const [tab, setTab] = useState(2);
 
   const handleTabClick = (tabIndex) => {
     setTab(tabIndex);
@@ -35,7 +36,7 @@ function Reportes(props) {
         </Menu.Item>
       </Menu>
       {tab === 2 && <TablaSimbolos simbolos = {simbolos} />}         
-      {tab === 3 && <AST ast/>}
+      {tab === 3 && <AST ast = {ast}/>}
       {tab === 4 && <Errores errores = {error} />}   
 
     </Segment>

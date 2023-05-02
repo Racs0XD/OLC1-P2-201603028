@@ -32,12 +32,13 @@ function App() {
       reportes = res.data.reportes
       errores = res.data.errores;      
       simbolos = res.data.tabSimbolos;
-      imagen = res.data.ast;
+      imagen = res.data.arbol;
+      console.log(imagen)
       setReportes(reportes)
       setConsola(data)      
       setErrores(errores);
       setSimboles(simbolos);
-      if (res.data.ast !== null) {
+      if (res.data.arbol !== null) {
         setAst("data:image/png;base64," + imagen);
       } else {
         console.log("AST NULO")
