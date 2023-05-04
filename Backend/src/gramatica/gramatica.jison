@@ -90,7 +90,8 @@
 ["\'"]([^"\'"])*["\'"]                  return 'char'
 
 <<EOF>>               return 'EOF'
-.                     { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+ 
+.                       { respuesta.err  =  "Tipo de Error: Lexico, Descirpcion: "+ yytext + " Linea: "  + (yylloc.first_line-1) + ", Columna: " + yylloc.first_column ; return respuesta; }
 /lex
 
 
@@ -111,7 +112,7 @@
 %% /* language grammar */
 
 INICIO:  OPCIONESCUERPO EOF {respuesta.err = ""; respuesta.LIns = $1; return respuesta;}
-    //| error ptcoma         { respuesta.err  =  "Error Sintactico: "+ $$ + " Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }|
+        | error ptcoma         {  respuesta.err  =  "Tipo de Error: Sintactico, Descirpcion: Se encontro "+ $0 + " se esperaba "+$1 +", Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }|
 ;
 
 
@@ -129,7 +130,7 @@ CUERPO: DEC_VAR ptcoma {$$=$1;}                                           //DECL
         |ADD_LISTA {$$=$1}
         |ACCEDER_LISTA {$$=$1}
         |CHARARRAY {$$=$1}
-        //| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
+        |error   { respuesta.err  =  "Tipo de Error: Sintactico, Descirpcion: Se encontro "+ $0 + " se esperaba "+$1 +", Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }
 ;
 
 METODOS: Rvoid identificador parA parC llaveA INSTRUCCIONES llaveC {$$ = INSTRUCCION.nuevoMetodo($2, null, $6, this._$.first_line,this._$.first_column+1)}
@@ -206,7 +207,7 @@ INSTRUCCION: LLAMADAFUNCION {$$=$1}
         |CONTINUE {$$=$1}
         |RETURN {$$=$1}
         |INSTRUCCIONFOR ptcoma {$$=$1}
-        //| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column)}
+        | error ptcoma  { respuesta.err  =  "Tipo de Error: Sintactico, Descirpcion: Se encontro "+ $0 + " se esperaba "+$1 +", Linea: "  + (this._$.first_line-1) + ", Columna: " + this._$.first_column ; return respuesta; }
 ;
 
 PRINT: Rprint parA EXPRESION parC ptcoma {$$ = INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1)}

@@ -81,13 +81,16 @@ function OperacionesVarias(_expresion, _ambito) {
     }
 }
 
-
+let respuesta = {
+    LIns: [],
+    err: ""
+};
 
 function suma(_opizq, _opDer, _ambito) {
 
     var opIzq = _opizq
     var opDer = _opDer
-    const tipores = TipoResultado(opIzq.tipo, opDer.tipo)
+    const tipores = TipoResultado(opIzq.tipo, opDer.tipo);
     if (tipores != null) {
         if (tipores === TIPO_DATO.DECIMAL || tipores === TIPO_DATO.ENTERO) {
             if (opIzq.tipo === TIPO_DATO.BOOL || opDer.tipo === TIPO_DATO.BOOL) {
@@ -159,6 +162,7 @@ function suma(_opizq, _opDer, _ambito) {
                 }
             } else {
                 const resultado = Number(opIzq.valor) + Number(opDer.valor);
+
                 return {
                     valor: resultado,
                     tipo: tipores,
@@ -182,6 +186,15 @@ function suma(_opizq, _opDer, _ambito) {
 
         }
 
+    } else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
+        }
     }
 
 }
@@ -294,6 +307,15 @@ function resta(_opizq, _opDer, _ambito) {
 
 
         }
+    } else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
+        }
     }
 }
 
@@ -384,6 +406,15 @@ function multiplicacion(_opizq, _opDer, _ambito) {
                 }
             }
         }
+    } else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
+        }
     }
 }
 
@@ -441,6 +472,15 @@ function division(_opizq, _opDer, _ambito) {
                 linea: _opizq.linea,
                 columna: _opizq.columna
             }
+        }
+    }else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
         }
     }
 }
@@ -508,6 +548,15 @@ function potencia(_opizq, _opDer, _ambito) {
                 columna: _opizq.columna
             }
         }
+    } else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
+        }
     }
 }
 
@@ -573,6 +622,15 @@ function modular(_opizq, _opDer, _ambito) {
                 linea: _opizq.linea,
                 columna: _opizq.columna
             }
+        }
+    } else {
+        var respuesta_err = " Tipo de Error: Semantico, Descirpcion: No se pudo realizar operacion, Linea: "  + _opizq.linea + ", Columna: " + _opDer.column ; 
+        var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
+        return{
+            valor: respuesta+",\n"+respuesta_err,
+            tipo: null,
+            linea: _opizq.linea,
+            columna: _opizq.columna
         }
     }
 }

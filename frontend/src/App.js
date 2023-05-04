@@ -33,7 +33,7 @@ function App() {
       errores = res.data.errores;      
       simbolos = res.data.tabSimbolos;
       imagen = res.data.arbol;
-      console.log(imagen)
+      //console.log(imagen)
       setReportes(reportes)
       setConsola(data)      
       setErrores(errores);

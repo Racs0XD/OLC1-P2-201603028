@@ -76,11 +76,32 @@ module.exports = (parser, app) => {
             //=================================================================================================
             //========================================== Retorno Error ========================================
             //=================================================================================================
+
+            let errores = [];
+            // Cadena de error
+            let cadenaError = ast.err;
+
+            // Separar los valores de la cadena
+            //console.log(cadenaError)
+            let tipoError = cadenaError.split("Tipo de Error:")[1].split(", Descirpcion:")[0]   
+            let descripcion = cadenaError.split("Descirpcion:")[1].split(", Linea:")[0]            
+            let linea = cadenaError.split("Linea: ")[1].split(",")[0];
+            let columna = cadenaError.split("Columna: ")[1];
+
+            // Almacenar los valores en un objeto y agregarlo a la matriz de errores
+            let error = {
+                "Tipo_Error": tipoError,
+                "Descripcion": descripcion,
+                "Fila": linea,
+                "Columna": columna
+            };
+            errores.push(error);
+
             var resultado = {
                 arbol: ast,
                 resultado: ast.err,
                 tabSimbolos: [],
-                errores: ast.err
+                errores: errores
             }
         }
         //=================================================================================================

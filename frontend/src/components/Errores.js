@@ -2,6 +2,7 @@ import React from 'react'
 import { Header, Icon, Message, Segment, Table } from 'semantic-ui-react'
 
 function Errores(props) {
+    console.log(props.errores)
     return (
         <>
             <Segment>
@@ -26,7 +27,10 @@ function Errores(props) {
                                 {props.errores.map((c, index) =>
                                     <Table.Row>
                                         <Table.Cell>{index + 1}</Table.Cell>
-                                        <Table.Cell>{c}</Table.Cell>
+                                        <Table.Cell>{c.Tipo_Error}</Table.Cell>
+                                        <Table.Cell>{c.Descripcion}</Table.Cell>
+                                        <Table.Cell>{c.Fila}</Table.Cell>
+                                        <Table.Cell>{c.Columna}</Table.Cell>
                                     </Table.Row>
                                 )}
 

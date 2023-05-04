@@ -256,6 +256,22 @@ class Graficador {
                 this.grafo += nombreHijo + "[label=\"ADD_LISTA\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
                 this.graficarAddLista(instruccion, nombreHijo)
+            } else if (instruccion.tipo === TIPO_INSTRUCCION.BREAK) {
+                var nombreHijo = "Nodo" + this.contador
+                this.contador++;
+                this.grafo += nombreHijo + "[label=\"BREAK\"];\n"
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
+            } else if (instruccion.tipo === TIPO_INSTRUCCION.CONTINUE) {
+                var nombreHijo = "Nodo" + this.contador
+                this.contador++;
+                this.grafo += nombreHijo + "[label=\"CONTINUE\"];\n"
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
+            } else if (instruccion.tipo === TIPO_INSTRUCCION.RETURN) {
+                var nombreHijo = "Nodo" + this.contador
+                this.contador++;
+                this.grafo += nombreHijo + "[label=\"RETURN\"];\n"
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
+                this.graficarOperacion(instruccion.retorno, nombreHijo)
             }
 
         });
