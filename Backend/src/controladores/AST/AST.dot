@@ -1,249 +1,90 @@
 digraph G {
 node [shape="box"]Nodo0[label="RAIZ"];
-Nodo1[label="DEC_METODO"];
+Nodo1[label="DECLARACION"];
 Nodo0->Nodo1;
-Nodo2[label="METODO
- funcionesEspecialesYNativas"];
+Nodo2[label="TIPO
+ ENTERO"];
 Nodo1->Nodo2;
-Nodo3[label="INSTRUCCIONES"];
-Nodo1->Nodo3;
-Nodo4[label="DECLARACION"];
-Nodo3->Nodo4;
-Nodo5[label="TIPO
- ENTERO"];
-Nodo4->Nodo5;
-Nodo6[label="ID
+Nodo3[label="ID
  a"];
-Nodo4->Nodo6;
-Nodo7[label="VAL_ENTERO
- 15"];
-Nodo4->Nodo7;
-Nodo8[label="Print"];
-Nodo3->Nodo8;
-Nodo9[label="VAL_CADENA
- \"------------------TOLOWER-------------------\""];
-Nodo8->Nodo9;
-Nodo10[label="Print"];
-Nodo3->Nodo10;
-Nodo11[label="VAL_CADENA
- \"SIN TOLOWER\""];
-Nodo10->Nodo11;
-Nodo12[label="Print"];
-Nodo3->Nodo12;
-Nodo13[label="Print"];
-Nodo3->Nodo13;
-Nodo14[label="VAL_CADENA
- \"------------------TOUPPER-------------------\""];
-Nodo13->Nodo14;
-Nodo15[label="Print"];
-Nodo3->Nodo15;
-Nodo16[label="VAL_CADENA
- \"sin toupper\""];
-Nodo15->Nodo16;
-Nodo17[label="Print"];
-Nodo3->Nodo17;
-Nodo18[label="Print"];
-Nodo3->Nodo18;
-Nodo19[label="VAL_CADENA
- \"------------------TRUNCATE------------------\""];
-Nodo18->Nodo19;
-Nodo20[label="DECLARACION"];
-Nodo3->Nodo20;
-Nodo21[label="TIPO
- DECIMAL"];
-Nodo20->Nodo21;
-Nodo22[label="ID
- b"];
-Nodo20->Nodo22;
-Nodo23[label="VAL_DECIMAL
- 17.8"];
-Nodo20->Nodo23;
-Nodo24[label="Print"];
-Nodo3->Nodo24;
-Nodo25[label="VAL_IDENTIFICADOR
- b"];
-Nodo24->Nodo25;
-Nodo26[label="DECLARACION"];
-Nodo3->Nodo26;
-Nodo27[label="TIPO
+Nodo1->Nodo3;
+Nodo4[label="VAL_ENTERO
+ 1"];
+Nodo1->Nodo4;
+Nodo5[label="DECLARACION"];
+Nodo0->Nodo5;
+Nodo6[label="TIPO
  ENTERO"];
-Nodo26->Nodo27;
-Nodo28[label="ID
- b2"];
-Nodo26->Nodo28;
+Nodo5->Nodo6;
+Nodo7[label="ID
+ b"];
+Nodo5->Nodo7;
+Nodo8[label="VAL_ENTERO
+ 2"];
+Nodo5->Nodo8;
+Nodo9[label="DECLARACION"];
+Nodo0->Nodo9;
+Nodo10[label="TIPO
+ ENTERO"];
+Nodo9->Nodo10;
+Nodo11[label="ID
+ x"];
+Nodo9->Nodo11;
+Nodo12[label="VAL_ENTERO
+ 50"];
+Nodo9->Nodo12;
+Nodo13[label="DEC_METODO"];
+Nodo0->Nodo13;
+Nodo14[label="METODO
+ Pure"];
+Nodo13->Nodo14;
+Nodo15[label="INSTRUCCIONES"];
+Nodo13->Nodo15;
+Nodo16[label="IF ELSE"];
+Nodo15->Nodo16;
+Nodo17[label="IF"];
+Nodo16->Nodo17;
+Nodo18[label="EXPRESION IF"];
+Nodo17->Nodo18;
+Nodo19[label="IGUALIGUAL
+ =="];
+Nodo18->Nodo19;
+Nodo20[label="VAL_IDENTIFICADOR
+ a"];
+Nodo19->Nodo20;
+Nodo21[label="VAL_ENTERO
+ 2"];
+Nodo19->Nodo21;
+Nodo22[label="INSTRUCCIONES IF"];
+Nodo17->Nodo22;
+Nodo23[label="Print"];
+Nodo22->Nodo23;
+Nodo24[label="SUMA
+ +"];
+Nodo23->Nodo24;
+Nodo25[label="VAL_IDENTIFICADOR
+ B"];
+Nodo24->Nodo25;
+Nodo26[label="VAL_CADENA
+ \" c\""];
+Nodo24->Nodo26;
+Nodo27[label="ELSE"];
+Nodo16->Nodo27;
+Nodo28[label="INSTRUCCIONES ELSE"];
+Nodo27->Nodo28;
 Nodo29[label="Print"];
-Nodo3->Nodo29;
-Nodo30[label="VAL_IDENTIFICADOR
- b2"];
+Nodo28->Nodo29;
+Nodo30[label="VAL_CADENA
+ \"CADENA DENTRO DEL ELSE\""];
 Nodo29->Nodo30;
 Nodo31[label="Print"];
-Nodo3->Nodo31;
+Nodo15->Nodo31;
 Nodo32[label="VAL_CADENA
- \"------------------ROUND-------------------\""];
+ \"hi\""];
 Nodo31->Nodo32;
-Nodo33[label="DECLARACION"];
-Nodo3->Nodo33;
-Nodo34[label="TIPO
- DECIMAL"];
+Nodo33[label="MAIN"];
+Nodo0->Nodo33;
+Nodo34[label="LLAMADA 
+ Pure"];
 Nodo33->Nodo34;
-Nodo35[label="ID
- c"];
-Nodo33->Nodo35;
-Nodo36[label="VAL_DECIMAL
- 26.5"];
-Nodo33->Nodo36;
-Nodo37[label="Print"];
-Nodo3->Nodo37;
-Nodo38[label="VAL_IDENTIFICADOR
- c"];
-Nodo37->Nodo38;
-Nodo39[label="ASIGNACION"];
-Nodo3->Nodo39;
-Nodo40[label="ASIGNACION
- c"];
-Nodo39->Nodo40;
-Nodo41[label="Print"];
-Nodo3->Nodo41;
-Nodo42[label="VAL_IDENTIFICADOR
- c"];
-Nodo41->Nodo42;
-Nodo43[label="DECLARACION"];
-Nodo3->Nodo43;
-Nodo44[label="TIPO
- DECIMAL"];
-Nodo43->Nodo44;
-Nodo45[label="ID
- cc"];
-Nodo43->Nodo45;
-Nodo46[label="VAL_DECIMAL
- 26.4"];
-Nodo43->Nodo46;
-Nodo47[label="Print"];
-Nodo3->Nodo47;
-Nodo48[label="VAL_IDENTIFICADOR
- cc"];
-Nodo47->Nodo48;
-Nodo49[label="ASIGNACION"];
-Nodo3->Nodo49;
-Nodo50[label="ASIGNACION
- cc"];
-Nodo49->Nodo50;
-Nodo51[label="Print"];
-Nodo3->Nodo51;
-Nodo52[label="VAL_IDENTIFICADOR
- cc"];
-Nodo51->Nodo52;
-Nodo53[label="Print"];
-Nodo3->Nodo53;
-Nodo54[label="VAL_CADENA
- \"-----------------TYPEOF--------------------\""];
-Nodo53->Nodo54;
-Nodo55[label="DECLARACION"];
-Nodo3->Nodo55;
-Nodo56[label="TIPO
- CADENA"];
-Nodo55->Nodo56;
-Nodo57[label="ID
- x"];
-Nodo55->Nodo57;
-Nodo58[label="VAL_CADENA
- \"soy una cadena\""];
-Nodo55->Nodo58;
-Nodo59[label="DECLARACION"];
-Nodo3->Nodo59;
-Nodo60[label="TIPO
- ENTERO"];
-Nodo59->Nodo60;
-Nodo61[label="ID
- y"];
-Nodo59->Nodo61;
-Nodo62[label="VAL_ENTERO
- 50"];
-Nodo59->Nodo62;
-Nodo63[label="DECLARACION"];
-Nodo3->Nodo63;
-Nodo64[label="TIPO
- DECIMAL"];
-Nodo63->Nodo64;
-Nodo65[label="ID
- z"];
-Nodo63->Nodo65;
-Nodo66[label="VAL_DECIMAL
- 78.5"];
-Nodo63->Nodo66;
-Nodo67[label="DECLARACION"];
-Nodo3->Nodo67;
-Nodo68[label="TIPO
- CHAR"];
-Nodo67->Nodo68;
-Nodo69[label="ID
- xx"];
-Nodo67->Nodo69;
-Nodo70[label="VAL_CHAR
- 'a'"];
-Nodo67->Nodo70;
-Nodo71[label="DECLARACION"];
-Nodo3->Nodo71;
-Nodo72[label="TIPO
- BOLEANO"];
-Nodo71->Nodo72;
-Nodo73[label="ID
- yy"];
-Nodo71->Nodo73;
-Nodo74[label="VAL_BOLEANO
- true"];
-Nodo71->Nodo74;
-Nodo75[label="Print"];
-Nodo3->Nodo75;
-Nodo76[label="Print"];
-Nodo3->Nodo76;
-Nodo77[label="Print"];
-Nodo3->Nodo77;
-Nodo78[label="Print"];
-Nodo3->Nodo78;
-Nodo79[label="Print"];
-Nodo3->Nodo79;
-Nodo80[label="Print"];
-Nodo3->Nodo80;
-Nodo81[label="VAL_CADENA
- \"------------------LENGTH-------------------\""];
-Nodo80->Nodo81;
-Nodo82[label="DECLARACION"];
-Nodo3->Nodo82;
-Nodo83[label="TIPO
- CADENA"];
-Nodo82->Nodo83;
-Nodo84[label="ID
- cadena"];
-Nodo82->Nodo84;
-Nodo85[label="VAL_CADENA
- \"soy una cadena\""];
-Nodo82->Nodo85;
-Nodo86[label="Print"];
-Nodo3->Nodo86;
-Nodo87[label="Print"];
-Nodo3->Nodo87;
-Nodo88[label="VAL_CADENA
- \"------------------TOSTRING-------------------\""];
-Nodo87->Nodo88;
-Nodo89[label="DECLARACION"];
-Nodo3->Nodo89;
-Nodo90[label="TIPO
- ENTERO"];
-Nodo89->Nodo90;
-Nodo91[label="ID
- numero"];
-Nodo89->Nodo91;
-Nodo92[label="VAL_ENTERO
- 105"];
-Nodo89->Nodo92;
-Nodo93[label="Print"];
-Nodo3->Nodo93;
-Nodo94[label="Print"];
-Nodo3->Nodo94;
-Nodo95[label="MAIN"];
-Nodo0->Nodo95;
-Nodo96[label="LLAMADA 
- funcionesEspecialesYNativas"];
-Nodo95->Nodo96;
 }

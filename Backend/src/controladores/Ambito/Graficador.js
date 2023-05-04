@@ -135,31 +135,61 @@ class Graficador {
                 this.contador++;
                 this.grafo += nombreHijo + "[label=\"IF\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
-                this.graficarOperacion(instruccion.expresion, nombreHijo)
-                this.recorrerInstrucciones(nombreHijo, instruccion.instrucciones)
+                this.graficarIF(instruccion, nombreHijo)
             } else if (instruccion.tipo === TIPO_INSTRUCCION.IFE) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
-                this.grafo += nombreHijo + "[label=\"ELSE\"];\n"
+                this.grafo += nombreHijo + "[label=\"IF ELSE\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
-                this.graficarOperacion(instruccion.expresion, nombreHijo)
-                this.recorrerInstrucciones(nombreHijo, instruccion.instruccionesIf)
-                this.recorrerInstrucciones(nombreHijo, instruccion.instruccionesElse)
+                if (instruccion.instruccionesIf != null) {
+                    var nombreH0 = "Nodo" + this.contador
+                    this.contador++;
+                    this.grafo += nombreH0 + "[label=\"IF\"];\n"
+                    this.grafo += nombreHijo + "->" + nombreH0 + ";\n"
+                    this.graficarIF(instruccion, nombreH0)
+                }
+                if (instruccion.instruccionesElse != null) {
+                    var nombreH1 = "Nodo" + this.contador
+                    this.contador++;
+                    this.grafo += nombreH1 + "[label=\"ELSE\"];\n"
+                    this.grafo += nombreHijo + "->" + nombreH1 + ";\n"
+                    this.graficarELSE(instruccion, nombreH1)
+                }
             } else if (instruccion.tipo === TIPO_INSTRUCCION.ELSEIF) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
                 this.grafo += nombreHijo + "[label=\"ELSE IF\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
-                this.graficarOperacion(instruccion.expresion, nombreHijo)
-                this.recorrerInstrucciones(nombreHijo, instruccion.instruccionesElseIf)
+                this.graficarElseIf(instruccion.lista_elseif, nombreHijo)
             } else if (instruccion.tipo === TIPO_INSTRUCCION.IFEIF) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
-                this.grafo += nombreHijo + "[label=\"IF ELSE-IF\"];\n"
+                this.grafo += nombreHijo + "[label=\"IF ELSE IF\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
-                this.graficarOperacion(instruccion.expresion, nombreHijo)
-                this.recorrerInstrucciones(nombreHijo, instruccion.instruccionesElse)
-                this.recorrerInstrucciones(nombreHijo, instruccion.lista_elseif)
+                if (instruccion.instruccionesIf != null) {
+                    var nombreH0 = "Nodo" + this.contador
+                    this.contador++;
+                    this.grafo += nombreH0 + "[label=\"IF\"];\n"
+                    this.grafo += nombreHijo + "->" + nombreH0 + ";\n"
+                    this.graficarIF(instruccion, nombreH0)
+                }
+
+                if (instruccion.lista_elseif != null) {
+                    var nombreH = "Nodo" + this.contador
+                    this.contador++;
+                    this.grafo += nombreH + "[label=\"ELSE IF\"];\n"
+                    this.grafo += nombreHijo + "->" + nombreH + ";\n"
+                    this.graficarElseIf(instruccion.lista_elseif, nombreH)
+                }
+                if (instruccion.instruccionesElse != null) {
+                    var nombreH1 = "Nodo" + this.contador
+                    this.contador++;
+                    this.grafo += nombreH1 + "[label=\"ELSE\"];\n"
+                    this.grafo += nombreHijo + "->" + nombreH1 + ";\n"
+                    this.graficarELSE(instruccion, nombreH1)
+                }
+
+
             } else if (instruccion.tipo === TIPO_INSTRUCCION.SWITCH) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
@@ -178,18 +208,18 @@ class Graficador {
                 this.grafo += nombreHijo + "[label=\"WHILE\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
                 this.graficarWhile(instruccion, nombreHijo)
-            }else if (instruccion.tipo === TIPO_INSTRUCCION.DOWHILE) {
+            } else if (instruccion.tipo === TIPO_INSTRUCCION.DOWHILE) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
                 this.grafo += nombreHijo + "[label=\"DO WHILE\"];\n"
                 this.grafo += _padre + "->" + nombreHijo + ";\n"
-                this.graficarDoWhile(instruccion, nombreHijo)                
+                this.graficarDoWhile(instruccion, nombreHijo)
 
             } else if (instruccion.tipo === TIPO_INSTRUCCION.FOR) {
                 var nombreHijo = "Nodo" + this.contador
                 this.contador++;
                 this.grafo += nombreHijo + "[label=\"FOR\"];\n"
-                this.grafo += _padre + "->" + nombreHijo + ";\n"           
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
                 this.graficarFor(instruccion, nombreHijo)
 
 
@@ -231,14 +261,49 @@ class Graficador {
         });
     }
 
-    graficarSWITCH(_instruccion, _padre) {       
+    graficarIF(_instruccion, _padre) {
+        if (_instruccion.expresion != null) {
+            var expresion = `Nodo${this.contador}`
+            this.grafo += expresion + `[label=\"EXPRESION IF\"];\n`;
+            this.grafo += _padre + "->" + expresion + ";\n"
+            this.contador++;
+            this.graficarOperacion(_instruccion.expresion, expresion)
+        }
+        if (_instruccion.instrucciones != null || _instruccion.instruccionesIf != undefined) {
+            var actuali = `Nodo${this.contador}`
+            this.grafo += actuali + `[label=\"INSTRUCCIONES IF\"];\n`;
+            this.grafo += _padre + "->" + actuali + ";\n"
+            this.contador++;
+            var instrucciones;
+            if (_instruccion.instruccionesIf) {
+                instrucciones = _instruccion.instruccionesIf
+            } else if (_instruccion.instrucciones) {
+                instrucciones = _instruccion.instrucciones
+            }
+            this.recorrerInstrucciones(actuali, instrucciones)
+        }
+
+    }
+
+    graficarELSE(_instruccion, _padre) {
+        if (_instruccion.instruccionesElse != null) {
+            var actuali = `Nodo${this.contador}`
+            this.grafo += actuali + `[label=\"INSTRUCCIONES ELSE\"];\n`;
+            this.grafo += _padre + "->" + actuali + ";\n"
+            this.contador++;
+            this.recorrerInstrucciones(actuali, _instruccion.instruccionesElse)
+        }
+
+    }
+
+    graficarIFELSE(_instruccion, _padre) {
         if (_instruccion.expresion != null) {
             var expresion = `Nodo${this.contador}`
             this.grafo += expresion + `[label=\"EXPRESION\"];\n`;
             this.grafo += _padre + "->" + expresion + ";\n"
             this.contador++;
             this.graficarOperacion(_instruccion.expresion, expresion)
-        }      
+        }
         if (_instruccion.lista_case != null) {
             var actuali = `Nodo${this.contador}`
             this.grafo += actuali + `[label=\"INSTRUCCIONES\"];\n`;
@@ -249,14 +314,54 @@ class Graficador {
 
     }
 
-    graficarCASE(_instruccion, _padre) {          
+    graficarElseIf(_instruccion, _padre) {
+
+        _instruccion.forEach(_instruccion => {
+            if (_instruccion.expresion != null) {
+                var expresion = `Nodo${this.contador}`
+                this.grafo += expresion + `[label=\"EXPRESION ELSE IF\"];\n`;
+                this.grafo += _padre + "->" + expresion + ";\n"
+                this.contador++;
+                this.graficarOperacion(_instruccion.expresion, expresion)
+            }
+            if (_instruccion.instruccionesElseIf != null) {
+                var actuali = `Nodo${this.contador}`
+                this.grafo += actuali + `[label=\"INSTRUCCIONES ELSE IF\"];\n`;
+                this.grafo += _padre + "->" + actuali + ";\n"
+                this.contador++;
+                this.recorrerInstrucciones(actuali, _instruccion.instruccionesElseIf)
+            }
+        });
+
+
+    }
+
+    graficarSWITCH(_instruccion, _padre) {
         if (_instruccion.expresion != null) {
             var expresion = `Nodo${this.contador}`
             this.grafo += expresion + `[label=\"EXPRESION\"];\n`;
             this.grafo += _padre + "->" + expresion + ";\n"
             this.contador++;
             this.graficarOperacion(_instruccion.expresion, expresion)
-        }      
+        }
+        if (_instruccion.lista_case != null) {
+            var actuali = `Nodo${this.contador}`
+            this.grafo += actuali + `[label=\"INSTRUCCIONES\"];\n`;
+            this.grafo += _padre + "->" + actuali + ";\n"
+            this.contador++;
+            this.recorrerInstrucciones(actuali, _instruccion.lista_case)
+        }
+
+    }
+
+    graficarCASE(_instruccion, _padre) {
+        if (_instruccion.expresion != null) {
+            var expresion = `Nodo${this.contador}`
+            this.grafo += expresion + `[label=\"EXPRESION\"];\n`;
+            this.grafo += _padre + "->" + expresion + ";\n"
+            this.contador++;
+            this.graficarOperacion(_instruccion.expresion, expresion)
+        }
         if (_instruccion.instruccionesCase != null) {
             var actuali = `Nodo${this.contador}`
             this.grafo += actuali + `[label=\"INSTRUCCIONES CASE\"];\n`;
@@ -268,7 +373,7 @@ class Graficador {
     }
 
     graficarFor(_instruccion, _padre) {
-        
+
         if (_instruccion.expresion != null) {
             var expresion = `Nodo${this.contador}`
             this.grafo += expresion + `[label=\"EXPRESION\"];\n`;
@@ -300,7 +405,7 @@ class Graficador {
 
     }
 
-    graficarWhile(_instruccion, _padre) {             
+    graficarWhile(_instruccion, _padre) {
         if (_instruccion.expresion != null) {
             var expresion = `Nodo${this.contador}`
             this.grafo += expresion + `[label=\"CONDICION\"];\n`;
@@ -308,7 +413,7 @@ class Graficador {
             this.contador++;
             console.log(_instruccion.expresion)
             this.graficarOperacion(_instruccion.expresion, expresion)
-        }      
+        }
         if (_instruccion.instrucciones != null) {
             var actuali = `Nodo${this.contador}`
             this.grafo += actuali + `[label=\"INSTRUCCIONES\"];\n`;
@@ -333,7 +438,7 @@ class Graficador {
             this.grafo += _padre + "->" + expresion + ";\n"
             this.contador++;
             this.graficarOperacion(_instruccion.expresion, expresion)
-        }      
+        }
 
     }
 
@@ -352,69 +457,70 @@ class Graficador {
     }
 
     graficarOperacion(_expresion, _padre) {
-        if(_expresion != null){
-        if (_expresion.tipo === TIPO_VALOR.DECIMAL || _expresion.tipo === TIPO_VALOR.BOOL || _expresion.tipo === TIPO_VALOR.ENTERO ||
-            _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || _expresion.tipo === TIPO_VALOR.CHAR) {
-            //console.log(_expresion.tipo, "valor")
-            //console.log(_expresion, "expresion")
-            var exp = _expresion.valor.toString()
-            exp = exp.replace(/\"/gi, '\\\"') //reemplaza las comillas dobles por \"
-            var value = `Nodo${this.contador}`
-            this.grafo += value + `[label=\"${_expresion.tipo}\n ${exp}\"];\n`;
-            this.grafo += _padre + "->" + value + ";\n";
-            this.contador++;
-        }
-        else if (_expresion.tipo === TIPO_OPERACION.SUMA || _expresion.tipo === TIPO_OPERACION.RESTA || _expresion.tipo === TIPO_OPERACION.MULTIPLICACION ||
-            _expresion.tipo === TIPO_OPERACION.DIVISION || _expresion.tipo === TIPO_OPERACION.POTENCIA || _expresion.tipo === TIPO_OPERACION.MODULO ||
-            _expresion.tipo === TIPO_OPERACION.MAYOR || _expresion.tipo === TIPO_OPERACION.MENOR || _expresion.tipo === TIPO_OPERACION.MAYORIGUAL ||
-            _expresion.tipo === TIPO_OPERACION.MENORIGUAL || _expresion.tipo === TIPO_OPERACION.IGUALIGUAL || _expresion.tipo === TIPO_OPERACION.DIFERENTE ||
-            _expresion.tipo === TIPO_OPERACION.OR || _expresion.tipo === TIPO_OPERACION.AND || _expresion.tipo === TIPO_OPERACION.NOT) {
-            var value = `Nodo${this.contador}`
-            this.grafo += value + `[label=\"${_expresion.tipo}\n ${this.getSimbolo(_expresion.tipo)}\"];\n`;
-            this.grafo += _padre + "->" + value + ";\n";
-            this.contador++;
-            this.graficarOperacion(_expresion.opIzq, value)
-            this.graficarOperacion(_expresion.opDer, value)
+        if (_expresion != null) {
+            if (_expresion.tipo === TIPO_VALOR.DECIMAL || _expresion.tipo === TIPO_VALOR.BOOL || _expresion.tipo === TIPO_VALOR.ENTERO ||
+                _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR || _expresion.tipo === TIPO_VALOR.CHAR) {
+                //console.log(_expresion.tipo, "valor")
+                //console.log(_expresion, "expresion")
+                var exp = _expresion.valor.toString()
+                exp = exp.replace(/\"/gi, '\\\"') //reemplaza las comillas dobles por \"
+                var value = `Nodo${this.contador}`
+                this.grafo += value + `[label=\"${_expresion.tipo}\n ${exp}\"];\n`;
+                this.grafo += _padre + "->" + value + ";\n";
+                this.contador++;
+            }
+            else if (_expresion.tipo === TIPO_OPERACION.SUMA || _expresion.tipo === TIPO_OPERACION.RESTA || _expresion.tipo === TIPO_OPERACION.MULTIPLICACION ||
+                _expresion.tipo === TIPO_OPERACION.DIVISION || _expresion.tipo === TIPO_OPERACION.POTENCIA || _expresion.tipo === TIPO_OPERACION.MODULO ||
+                _expresion.tipo === TIPO_OPERACION.MAYOR || _expresion.tipo === TIPO_OPERACION.MENOR || _expresion.tipo === TIPO_OPERACION.MAYORIGUAL ||
+                _expresion.tipo === TIPO_OPERACION.MENORIGUAL || _expresion.tipo === TIPO_OPERACION.IGUALIGUAL || _expresion.tipo === TIPO_OPERACION.DIFERENTE ||
+                _expresion.tipo === TIPO_OPERACION.OR || _expresion.tipo === TIPO_OPERACION.AND || _expresion.tipo === TIPO_OPERACION.NOT) {
+                var value = `Nodo${this.contador}`
+                this.grafo += value + `[label=\"${_expresion.tipo}\n ${this.getSimbolo(_expresion.tipo)}\"];\n`;
+                this.grafo += _padre + "->" + value + ";\n";
+                this.contador++;
+                this.graficarOperacion(_expresion.opIzq, value)
+                this.graficarOperacion(_expresion.opDer, value)
 
-        } else if (_expresion.tipo === TIPO_INSTRUCCION.INCREMENTO || _expresion.tipo === TIPO_INSTRUCCION.DECREMENTO) {
-            var value = `Nodo${this.contador}`
-            this.grafo += value + `[label=\"${_expresion.tipo}\n ${_expresion.id+this.getSimbolo(_expresion.tipo)}\"];\n`;
-            this.grafo += _padre + "->" + value + ";\n";
-            this.contador++;
-            
-        } else if (_expresion.tipo === TIPO_OPERACION.UNARIA) {
-            var value = `Nodo${this.contador}`
-            this.grafo += value + `[label=\"${_expresion.tipo}\n ${this.getSimbolo(_expresion.tipo)}\"];\n`;
-            this.grafo += _padre + "->" + value + ";\n";
-            this.contador++;
-            this.graficarOperacion(_expresion.opDer, value)
-        } else if (_expresion.tipo === TIPO_VALOR.VECTOR) {
-            var value = `Nodo${this.contador}`;
-            this.grafo += value + `[label=\" ${_expresion.tipo}\"];\n`;
-            this.grafo += _padre + "->" + value + ";\n"
-            this.contador++;
-            var value2 = `Nodo${this.contador}`;
-            this.grafo += value2 + `[label=\"IDENTIFICADOR ${_expresion.valor}\"];\n`;
-            this.grafo += value + "->" + value2 + ";\n"
-            this.contador++;
-            var indice = `Nodo${this.contador}`;
-            this.grafo += indice + `[label=\"INDICE \"];\n`;
-            this.grafo += value + "->" + indice + ";\n"
-            this.contador++;
-            this.graficarOperacion(_expresion.indice, indice)
-        } else if (_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
-            var nombreHijo = "Nodo" + this.contador
-            this.contador++;
-            this.grafo += nombreHijo + "[label=\"LLAMADA_METODO\"];\n"
-            this.grafo += _padre + "->" + nombreHijo + ";\n"
-            this.graficarLlamadaMetodo(_expresion, nombreHijo)
-        } else if (_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION) {
-            var nombreHijo = "Nodo" + this.contador
-            this.contador++;
-            this.grafo += nombreHijo + "[label=\"LLAMADA_FUNCION\"];\n"
-            this.grafo += _padre + "->" + nombreHijo + ";\n"
-            this.graficarLlamadaFuncion(_expresion, nombreHijo)
-        }}
+            } else if (_expresion.tipo === TIPO_INSTRUCCION.INCREMENTO || _expresion.tipo === TIPO_INSTRUCCION.DECREMENTO) {
+                var value = `Nodo${this.contador}`
+                this.grafo += value + `[label=\"${_expresion.tipo}\n ${_expresion.id + this.getSimbolo(_expresion.tipo)}\"];\n`;
+                this.grafo += _padre + "->" + value + ";\n";
+                this.contador++;
+
+            } else if (_expresion.tipo === TIPO_OPERACION.UNARIA) {
+                var value = `Nodo${this.contador}`
+                this.grafo += value + `[label=\"${_expresion.tipo}\n ${this.getSimbolo(_expresion.tipo)}\"];\n`;
+                this.grafo += _padre + "->" + value + ";\n";
+                this.contador++;
+                this.graficarOperacion(_expresion.opDer, value)
+            } else if (_expresion.tipo === TIPO_VALOR.VECTOR) {
+                var value = `Nodo${this.contador}`;
+                this.grafo += value + `[label=\" ${_expresion.tipo}\"];\n`;
+                this.grafo += _padre + "->" + value + ";\n"
+                this.contador++;
+                var value2 = `Nodo${this.contador}`;
+                this.grafo += value2 + `[label=\"IDENTIFICADOR ${_expresion.valor}\"];\n`;
+                this.grafo += value + "->" + value2 + ";\n"
+                this.contador++;
+                var indice = `Nodo${this.contador}`;
+                this.grafo += indice + `[label=\"INDICE \"];\n`;
+                this.grafo += value + "->" + indice + ";\n"
+                this.contador++;
+                this.graficarOperacion(_expresion.indice, indice)
+            } else if (_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO) {
+                var nombreHijo = "Nodo" + this.contador
+                this.contador++;
+                this.grafo += nombreHijo + "[label=\"LLAMADA_METODO\"];\n"
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
+                this.graficarLlamadaMetodo(_expresion, nombreHijo)
+            } else if (_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_FUNCION) {
+                var nombreHijo = "Nodo" + this.contador
+                this.contador++;
+                this.grafo += nombreHijo + "[label=\"LLAMADA_FUNCION\"];\n"
+                this.grafo += _padre + "->" + nombreHijo + ";\n"
+                this.graficarLlamadaFuncion(_expresion, nombreHijo)
+            }
+        }
     }
     getSimbolo(_tipo) {
         switch (_tipo) {
